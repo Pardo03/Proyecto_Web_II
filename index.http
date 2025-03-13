@@ -1,0 +1,11 @@
+### Registro de usuario y obtener token
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "usuario7@test.com",
+  "password": "password123"
+}
+
+
+

@@ -25,4 +25,29 @@ Content-Type: application/json
   "password": "password123"
 }
 
+### Onboarding: Datos personales
+PUT http://localhost:3000/api/auth/personal
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGViOTczY2MxNThkYWQ3YWQ5NWEwZSIsImVtYWlsIjoidXN1YXJpbzEwQHRlc3QuY29tIiwiaWF0IjoxNzQyNjYyMzA5LCJleHAiOjE3NDI2NjU5MDl9.0GkU0opRsSQELiMxzEeHWNwDeTXTEpLZkjSlOgR2qdw
+
+{
+  "nombre": "Juan",
+  "apellidos": "Pérez Gómez",
+  "nif": "12345678A"
+}
+
+### Onboarding: Datos compañía
+PATCH http://localhost:3000/api/auth/company
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGViOTczY2MxNThkYWQ3YWQ5NWEwZSIsImVtYWlsIjoidXN1YXJpbzEwQHRlc3QuY29tIiwiaWF0IjoxNzQyNjYyMzA5LCJleHAiOjE3NDI2NjU5MDl9.0GkU0opRsSQELiMxzEeHWNwDeTXTEpLZkjSlOgR2qdw
+
+{
+  "nombre": "Empresa SL",
+  "cif": "B12345678",
+  "direccion": "Calle Mayor 1",
+  "esAutonomo": false
+}
+
+
+
 

@@ -34,6 +34,17 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 3, // Intentos permitidos para validar el código
   },
+  personalData: { // Datos personales del usuario
+    nombre: { type: String },
+    apellidos: { type: String },
+    nif: { type: String },
+  },
+  companyData: { // Datos de la empresa del usuario
+    nombre: { type: String },
+    cif: { type: String },
+    direccion: { type: String },
+    esAutonomo: { type: Boolean, default: false }
+  },  
 });
 
 // Middleware para cifrar la contraseña antes de guardar el usuario

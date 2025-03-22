@@ -153,3 +153,59 @@ exports.login = async (req, res) => {
   }
 };
 
+//PUT
+exports.updatePersonalData = async (req, res) => {
+  const { nombre, apellidos, nif } = req.body;
+
+  if (!nombre || !apellidos || !nif) {
+    return res.status(400).json({ message: "Nombre, apellidos y NIF son obligatorios" });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    user.personalData = { nombre, apellidos, nif };
+    await user.save();
+
+    res.status(200).json({ message: "Datos personales actualizados correctamente" });
+  } catch (error) {
+    console.error("Error actualizando datos personales:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+//PATCH
+exports.updateCompanyData = async (req, res) => {
+  const { nombre, cif, direccion, esAutonomo } = req.body;
+
+  if (!nombre || !cif || !direccion) {
+    return res.status(400).json({ message: "Nombre, CIF y dirección son obligatorios" });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    if (esAutonomo) {
+      user.companyData = {
+        nombre: user.personalData?.nombre || nombre,
+        cif: user.personalData?.nif || cif,
+        direccion,
+        esAutonomo: true
+      };
+    } else {
+      user.companyData = { nombre, cif, direccion, esAutonomo: false };
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "Datos de la compañía actualizados correctamente" });
+  } catch (error) {
+    console.error("Error actualizando compañía:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+
+

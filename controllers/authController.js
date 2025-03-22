@@ -63,3 +63,47 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
+exports.validateEmail = async (req, res) => {
+  try {
+    const { code } = req.body;
+
+    if (!code || code.length !== 6) {
+      return res.status(400).json({ message: "Código inválido (debe tener 6 dígitos)" });
+    }
+
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    if (user.status === "verified") {
+      return res.status(400).json({ message: "El email ya fue verificado" });
+    }
+
+    if (user.verificationCode === code) {
+      user.status = "verified";
+      user.verificationCode = undefined;
+      user.attemptsLeft = undefined;
+      await user.save();
+
+      return res.status(200).json({ message: "Email verificado correctamente" });
+    } else {
+      user.attemptsLeft -= 1;
+
+      if (user.attemptsLeft <= 0) {
+        await user.save();
+        return res.status(403).json({ message: "Demasiados intentos fallidos. Contacta soporte." });
+      }
+
+      await user.save();
+      return res.status(400).json({ message: `Código incorrecto. Intentos restantes: ${user.attemptsLeft}` });
+    }
+  } catch (error) {
+    console.error("Error en la validación del email:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};

@@ -3,8 +3,17 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario7@test.com",
+  "email": "usuario11@test.com",
   "password": "password123"
+}
+
+### Validar email con token
+PUT http://localhost:3000/api/auth/validate
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGVlNDdhNzQ3NGVkNWM1MTNjNTgxZiIsImVtYWlsIjoidXN1YXJpbzExQHRlc3QuY29tIiwiaWF0IjoxNzQyNjYwNzMwLCJleHAiOjE3NDI2NjQzMzB9.LnJk_8UVJT8k7frwkQl_kzWfFxHkyXciKW9B-VMJocA
+
+{
+  "code": "407864"
 }
 
 

@@ -26,7 +26,9 @@ const UserSchema = new mongoose.Schema({
   },
   verificationCode: {
     type: String, // Código de verificación de 6 dígitos
-    required: true,
+    required: function () {
+      return this.status !== "verified";
+    }
   },
   attemptsLeft: {
     type: Number,

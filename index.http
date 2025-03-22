@@ -3,17 +3,17 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario11@test.com",
-  "password": "password123"
+  "email": "PONER_AQUÍ_EL_EMAIL",
+  "password": "PONER_AQUÍ_LA_CONTRASEÑA"
 }
 
-### Validar email con token
+### Validar email con token JWT
 PUT http://localhost:3000/api/auth/validate
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGVlNDdhNzQ3NGVkNWM1MTNjNTgxZiIsImVtYWlsIjoidXN1YXJpbzExQHRlc3QuY29tIiwiaWF0IjoxNzQyNjYwNzMwLCJleHAiOjE3NDI2NjQzMzB9.LnJk_8UVJT8k7frwkQl_kzWfFxHkyXciKW9B-VMJocA
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
 
 {
-  "code": "407864"
+  "code": "AQUÍ_EL_CODIGO_QUE_VES_EN_LA_TERMINAL"
 }
 
 ### Login de usuario
@@ -21,33 +21,29 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "usuario10@test.com",
-  "password": "password123"
+  "email": "PONER_AQUÍ_EL_EMAIL",
+  "password": "PONER_AQUÍ_LA_CONTRASEÑA"
 }
 
 ### Onboarding: Datos personales
 PUT http://localhost:3000/api/auth/personal
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGViOTczY2MxNThkYWQ3YWQ5NWEwZSIsImVtYWlsIjoidXN1YXJpbzEwQHRlc3QuY29tIiwiaWF0IjoxNzQyNjYyMzA5LCJleHAiOjE3NDI2NjU5MDl9.0GkU0opRsSQELiMxzEeHWNwDeTXTEpLZkjSlOgR2qdw
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
 
 {
-  "nombre": "Juan",
-  "apellidos": "Pérez Gómez",
-  "nif": "12345678A"
+  "nombre": "PONER_AQUÍ_EL_NOMBRE",
+  "apellidos": "PONER_AQUÍ_LOS_APELLIDOS",
+  "nif": "PONER_AQUÍ_EL_NIF",
 }
 
 ### Onboarding: Datos compañía
 PATCH http://localhost:3000/api/auth/company
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGViOTczY2MxNThkYWQ3YWQ5NWEwZSIsImVtYWlsIjoidXN1YXJpbzEwQHRlc3QuY29tIiwiaWF0IjoxNzQyNjYyMzA5LCJleHAiOjE3NDI2NjU5MDl9.0GkU0opRsSQELiMxzEeHWNwDeTXTEpLZkjSlOgR2qdw
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
 
 {
-  "nombre": "Empresa SL",
-  "cif": "B12345678",
-  "direccion": "Calle Mayor 1",
+  "nombre": "PONER_AQUÍ_EL_NOMBRE_DE_LA_EMPRESA",
+  "cif": "PONER_AQUÍ_EL_CIF",
+  "direccion": "PONER_AQUÍ_LA_DIRECCIÓN",
   "esAutonomo": false
 }
-
-
-
-

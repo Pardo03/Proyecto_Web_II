@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, validateEmail, login, updatePersonalData, updateCompanyData, uploadLogo, getMe, deleteMe, forgotPassword, resetPassword } = require("../controllers/authController");
+const { register, validateEmail, login, updatePersonalData, updateCompanyData, uploadLogo, getMe, deleteMe, forgotPassword, resetPassword, inviteUser } = require("../controllers/authController");
 const verifyToken = require("../middlewares/authMiddleware");
 const upload = require("../middlewares/uploadMiddleware");
 
@@ -15,5 +15,6 @@ router.get("/me", verifyToken, getMe);
 router.delete("/delete", verifyToken, deleteMe);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
+router.post("/invite", verifyToken, inviteUser);
 
 module.exports = router;

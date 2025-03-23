@@ -97,3 +97,13 @@ Content-Type: application/json
   "email": "PONER_AQUÍ_EL_EMAIL",
   "password": "PONER_AQUÍ_LA_NUEVA_CONTRASEÑA"
 }
+
+
+### Invitar compañero con rol guest
+POST http://localhost:3000/api/auth/invite
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Content-Type: application/json
+
+{
+  "email": "PONER_AQUÍ_EL_EMAIL_INVITADO"
+}

@@ -338,4 +338,52 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+// Este método permite invitar a un usuario con rol "guest"
+exports.inviteUser = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return res.status(400).json({ message: "Email del invitado es obligatorio" });
+
+  try {
+    const inviter = await User.findById(req.user.id);
+
+    if (!inviter || inviter.isDeleted) {
+      return res.status(404).json({ message: "Usuario invitador no válido" });
+    }
+
+    const existing = await User.findOne({ email });
+    if (existing) {
+      return res.status(409).json({ message: "El email ya está registrado" });
+    }
+
+    // Generar contraseña temporal
+    const tempPassword = crypto.randomBytes(6).toString("hex");
+
+    // Crear nuevo usuario con rol guest
+    const newUser = new User({
+      email,
+      password: tempPassword,
+      status: "verified", // ya puede entrar sin validar email
+      role: "guest",
+      companyId: inviter._id,
+    });
+
+    await newUser.save();
+
+    console.log(`Usuario invitado con email: ${email}, contraseña temporal: ${tempPassword}`);
+
+    res.status(201).json({
+      message: "Invitación realizada correctamente",
+      guest: {
+        email: newUser.email,
+        role: newUser.role,
+        companyId: inviter._id
+      }
+    });
+  } catch (err) {
+    console.error("Error al invitar usuario:", err);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
 

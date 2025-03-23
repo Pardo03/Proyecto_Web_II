@@ -58,6 +58,10 @@ const UserSchema = new mongoose.Schema({
   resetTokenExpire: {
     type: Date,
   },
+  companyId: { // Esto permie que los usuarios con rol "guest" estén vinculados a quien los invitó
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // Middleware para cifrar la contraseña antes de guardar el usuario

@@ -20,6 +20,8 @@ app.use(morgan("dev"));
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
+app.use("/uploads", express.static("uploads")); // Para servir las imágenes de los logos
+
 app.get("/", (req, res) => {
   res.send("API Gestión de Usuarios esta funcionando");
 });

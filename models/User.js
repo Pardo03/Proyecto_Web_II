@@ -44,7 +44,10 @@ const UserSchema = new mongoose.Schema({
     cif: { type: String },
     direccion: { type: String },
     esAutonomo: { type: Boolean, default: false }
-  },  
+  }, 
+  logoUrl: { // URL de la imagen
+    type: String 
+  },
 });
 
 // Middleware para cifrar la contraseña antes de guardar el usuario

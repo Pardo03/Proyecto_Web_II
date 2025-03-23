@@ -47,3 +47,15 @@ Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
   "direccion": "PONER_AQUÍ_LA_DIRECCIÓN",
   "esAutonomo": false
 }
+
+### Subida de logo (imagen)
+PATCH http://localhost:3000/api/auth/logo
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Content-Type: multipart/form-data; boundary=BOUNDARY
+
+--BOUNDARY
+Content-Disposition: form-data; name="logo"; filename="NOMBRE_IMAGEN"
+Content-Type: image/jpeg
+
+< ./test_assets/Logo1.jpg
+--BOUNDARY--

@@ -1,6 +1,7 @@
 const express = require("express");
-const { register, validateEmail, login, updatePersonalData, updateCompanyData } = require("../controllers/authController");
-const verifyToken = require("../middlewares/authMiddleware"); 
+const { register, validateEmail, login, updatePersonalData, updateCompanyData, uploadLogo } = require("../controllers/authController");
+const verifyToken = require("../middlewares/authMiddleware");
+const upload = require("../middlewares/uploadMiddleware");
 
 const router = express.Router();
 
@@ -9,5 +10,6 @@ router.put("/validate", verifyToken, validateEmail); // Esta protegido por JWT
 router.post("/login", login);
 router.put("/personal", verifyToken, updatePersonalData); 
 router.patch("/company", verifyToken, updateCompanyData);
+router.patch("/logo", verifyToken, upload.single("logo"), uploadLogo); // Para subir la imagen del logo
 
 module.exports = router;

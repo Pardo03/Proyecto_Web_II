@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const crypto = require("crypto");
+const crypto = require("crypto"); // Para generar códigos aleatorios
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt"); // Para encriptar contraseñas
@@ -279,5 +279,63 @@ exports.deleteMe = async (req, res) => {
   }
 };
 
+// Este método genera un token de recuperación de contraseña
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return res.status(400).json({ message: "El email es obligatorio" });
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const expireTime = Date.now() + 15 * 60 * 1000; // 15 minutos
+
+    user.resetToken = resetToken;
+    user.resetTokenExpire = expireTime;
+    await user.save();
+
+    console.log(`Token de recuperación para ${email}: ${resetToken}`);
+
+    res.status(200).json({ message: "Token de recuperación generado (mostrado por consola)" });
+  } catch (err) {
+    console.error("Error en forgotPassword:", err);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Este método permite cambiar la contraseña con un token de recuperación
+exports.resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  if (!token || !newPassword)
+    return res.status(400).json({ message: "Token y nueva contraseña son obligatorios" });
+
+  if (newPassword.length < 8)
+    return res.status(400).json({ message: "La nueva contraseña debe tener al menos 8 caracteres" });
+
+  try {
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Token inválido o expirado" });
+    }
+
+    user.password = newPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpire = undefined;
+
+    await user.save();
+
+    res.status(200).json({ message: "Contraseña actualizada correctamente" });
+  } catch (err) {
+    console.error("Error en resetPassword:", err);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
 
 

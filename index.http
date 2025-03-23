@@ -71,3 +71,29 @@ Authorization: Bearer PONER_AQUÍ_EL_TOKEN
 ### Eliminar cuenta (hard delete)
 DELETE http://localhost:3000/api/auth/delete?soft=false
 Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+
+### Recuperar contraseña - solicitar token
+POST http://localhost:3000/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "PONER_AQUÍ_EL_EMAIL"
+}
+
+### Resetear contraseña con token
+POST http://localhost:3000/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "COPIA_EL_TOKEN_DE_LA_CONSOLA",
+  "newPassword": "PONER_AQUÍ_LA_NUEVA_CONTRASEÑA"
+}
+
+### Comprobar que se puede hacer login con la nueva contraseña
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "PONER_AQUÍ_EL_EMAIL",
+  "password": "PONER_AQUÍ_LA_NUEVA_CONTRASEÑA"
+}

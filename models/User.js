@@ -52,6 +52,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  resetToken: {
+    type: String,
+  },
+  resetTokenExpire: {
+    type: Date,
+  },
 });
 
 // Middleware para cifrar la contraseña antes de guardar el usuario

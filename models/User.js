@@ -48,6 +48,10 @@ const UserSchema = new mongoose.Schema({
   logoUrl: { // URL de la imagen
     type: String 
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // Middleware para cifrar la contraseña antes de guardar el usuario

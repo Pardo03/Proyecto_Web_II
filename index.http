@@ -59,3 +59,15 @@ Content-Type: image/jpeg
 
 < ./test_assets/Logo1.jpg
 --BOUNDARY--
+
+### Obtener mis datos
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+
+### Desactivar cuenta (soft delete)
+DELETE http://localhost:3000/api/auth/delete
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+
+### Eliminar cuenta (hard delete)
+DELETE http://localhost:3000/api/auth/delete?soft=false
+Authorization: Bearer PONER_AQUÍ_EL_TOKEN

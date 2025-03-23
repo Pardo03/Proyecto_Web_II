@@ -230,5 +230,54 @@ exports.uploadLogo = async (req, res) => {
   }
 };
 
+// Este método devuelve los datos del usuario autenticado
+exports.getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user || user.isDeleted) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.status(200).json({
+      user: {
+        email: user.email,
+        status: user.status,
+        role: user.role,
+        personalData: user.personalData,
+        companyData: user.companyData,
+        logoUrl: user.logoUrl
+      }
+    });
+  } catch (error) {
+    console.error("Error al obtener el usuario:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Este método elimina el usuario autenticado
+exports.deleteMe = async (req, res) => {
+  const soft = req.query.soft !== "false"; // por defecto es true
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    if (soft) {
+      user.isDeleted = true;
+      await user.save();
+      return res.status(200).json({ message: "Usuario desactivado (soft delete)" });
+    } else {
+      await User.findByIdAndDelete(req.user.id);
+      return res.status(200).json({ message: "Usuario eliminado permanentemente (hard delete)" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
 
 

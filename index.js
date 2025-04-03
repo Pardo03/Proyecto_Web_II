@@ -22,6 +22,9 @@ app.use(morgan("dev"));
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
+const clientRoutes = require("./routes/clientRoutes");
+app.use("/api/client", clientRoutes);
+
 // Swagger documentation route
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 

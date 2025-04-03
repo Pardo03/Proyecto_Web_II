@@ -3,7 +3,7 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario18@test.com",
+  "email": "usuario25@test.com",
   "password": "password123"
 }
 
@@ -21,7 +21,7 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "usuario20@test.com",
+  "email": "usuario25@test.com",
   "password": "password123"
 }
 
@@ -105,4 +105,20 @@ Content-Type: application/json
 
 {
   "email": "invitado1@test.com"
+}
+
+### Crear cliente
+POST http://localhost:3000/api/client
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWU0OTEwNjY1ODI3YmE0ZWE4ZmQ3YyIsImVtYWlsIjoidXN1YXJpbzI1QHRlc3QuY29tIiwiaWF0IjoxNzQzNjY5NjkxLCJleHAiOjE3NDM2NzMyOTF9.9dtR-cBdFac1VRtWdPpZkVn7A8dIgCySpEkrCOX11qk
+Content-Type: application/json
+
+{
+  "nombre": "Cliente S.L.",
+  "email": "cliente@email.com",
+  "telefono": "123456789",
+  "direccion": "Calle Central 1",
+  "ciudad": "Madrid",
+  "provincia": "Madrid",
+  "codigoPostal": "28001",
+  "pais": "España"
 }

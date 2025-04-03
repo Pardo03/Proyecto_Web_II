@@ -3,17 +3,17 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "PONER_AQUÍ_EL_EMAIL",
-  "password": "PONER_AQUÍ_LA_CONTRASEÑA"
+  "email": "usuario18@test.com",
+  "password": "password123"
 }
 
-### Validar email con token JWT
+### Validar email con token
 PUT http://localhost:3000/api/auth/validate
 Content-Type: application/json
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzNmE5OGVkM2U1NTI3NDA0MiIsImVtYWlsIjoidXN1YXJpbzE4QHRlc3QuY29tIiwiaWF0IjoxNzQzMDY3NDYwLCJleHAiOjE3NDMwNzEwNjB9.3plvQGa_rwjNYUbht9WPpVrAH2U1_O-Wws495Llb1l8
 
 {
-  "code": "AQUÍ_EL_CODIGO_QUE_VES_EN_LA_TERMINAL"
+  "code": "140311"
 }
 
 ### Login de usuario
@@ -21,40 +21,40 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "PONER_AQUÍ_EL_EMAIL",
-  "password": "PONER_AQUÍ_LA_CONTRASEÑA"
+  "email": "usuario20@test.com",
+  "password": "password123"
 }
 
 ### Onboarding: Datos personales
 PUT http://localhost:3000/api/auth/personal
 Content-Type: application/json
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzNmE5OGVkM2U1NTI3NDA0MiIsImVtYWlsIjoidXN1YXJpbzE4QHRlc3QuY29tIiwiaWF0IjoxNzQzMDY3NDYwLCJleHAiOjE3NDMwNzEwNjB9.3plvQGa_rwjNYUbht9WPpVrAH2U1_O-Wws495Llb1l8
 
 {
-  "nombre": "PONER_AQUÍ_EL_NOMBRE",
-  "apellidos": "PONER_AQUÍ_LOS_APELLIDOS",
-  "nif": "PONER_AQUÍ_EL_NIF",
+  "nombre": "Sergio",
+  "apellidos": "Gómez Perez",
+  "nif": "12345678A"
 }
 
 ### Onboarding: Datos compañía
 PATCH http://localhost:3000/api/auth/company
 Content-Type: application/json
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN_JWT
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzNmE5OGVkM2U1NTI3NDA0MiIsImVtYWlsIjoidXN1YXJpbzE4QHRlc3QuY29tIiwiaWF0IjoxNzQzMDY3NDYwLCJleHAiOjE3NDMwNzEwNjB9.3plvQGa_rwjNYUbht9WPpVrAH2U1_O-Wws495Llb1l8
 
 {
-  "nombre": "PONER_AQUÍ_EL_NOMBRE_DE_LA_EMPRESA",
-  "cif": "PONER_AQUÍ_EL_CIF",
-  "direccion": "PONER_AQUÍ_LA_DIRECCIÓN",
-  "esAutonomo": false
+  "nombre": "Empresa SL",
+  "cif": "B12345678",
+  "direccion": "Calle Mayor 1",
+  "esAutonomo": true
 }
 
 ### Subida de logo (imagen)
 PATCH http://localhost:3000/api/auth/logo
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTAxMmE2OTM2YzRkMGVkMzYyZTFhMyIsImVtYWlsIjoidXN1YXJpbzEzQHRlc3QuY29tIiwiaWF0IjoxNzQyNzM4MDg2LCJleHAiOjE3NDI3NDE2ODZ9.8mmRMu3QG51-wbG3y6h2fm-Y7BAVLfungvWQJpVycZI
 Content-Type: multipart/form-data; boundary=BOUNDARY
 
 --BOUNDARY
-Content-Disposition: form-data; name="logo"; filename="NOMBRE_IMAGEN"
+Content-Disposition: form-data; name="logo"; filename="Logo1.jpg"
 Content-Type: image/jpeg
 
 < ./test_assets/Logo1.jpg
@@ -62,22 +62,22 @@ Content-Type: image/jpeg
 
 ### Obtener mis datos
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzNmE5OGVkM2U1NTI3NDA0MiIsImVtYWlsIjoidXN1YXJpbzE4QHRlc3QuY29tIiwiaWF0IjoxNzQzMDY3NDYwLCJleHAiOjE3NDMwNzEwNjB9.3plvQGa_rwjNYUbht9WPpVrAH2U1_O-Wws495Llb1l8
 
 ### Desactivar cuenta (soft delete)
 DELETE http://localhost:3000/api/auth/delete
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTAxMmE2OTM2YzRkMGVkMzYyZTFhMyIsImVtYWlsIjoidXN1YXJpbzEzQHRlc3QuY29tIiwiaWF0IjoxNzQyNzQ2MjE3LCJleHAiOjE3NDI3NDk4MTd9.L-egIZQ8ZEqR6ZXvC8Nd-PPvTLveRWXsMVF1hs2xO0M
 
 ### Eliminar cuenta (hard delete)
 DELETE http://localhost:3000/api/auth/delete?soft=false
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTAxMmE2OTM2YzRkMGVkMzYyZTFhMyIsImVtYWlsIjoidXN1YXJpbzEzQHRlc3QuY29tIiwiaWF0IjoxNzQyNzQ2MjE3LCJleHAiOjE3NDI3NDk4MTd9.L-egIZQ8ZEqR6ZXvC8Nd-PPvTLveRWXsMVF1hs2xO0M
 
 ### Recuperar contraseña - solicitar token
 POST http://localhost:3000/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "PONER_AQUÍ_EL_EMAIL"
+  "email": "usuario10@test.com"
 }
 
 ### Resetear contraseña con token
@@ -85,8 +85,8 @@ POST http://localhost:3000/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "token": "COPIA_EL_TOKEN_DE_LA_CONSOLA",
-  "newPassword": "PONER_AQUÍ_LA_NUEVA_CONTRASEÑA"
+  "token": "98fc10093d40000115aff79fa1fb88b405bf419224a9290b696f18474bae707a",
+  "newPassword": "nuevaPasswordSegura"
 }
 
 ### Comprobar que se puede hacer login con la nueva contraseña
@@ -94,16 +94,15 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "PONER_AQUÍ_EL_EMAIL",
-  "password": "PONER_AQUÍ_LA_NUEVA_CONTRASEÑA"
+  "email": "usuario10@test.com",
+  "password": "nuevaPasswordSegura"
 }
-
 
 ### Invitar compañero con rol guest
 POST http://localhost:3000/api/auth/invite
-Authorization: Bearer PONER_AQUÍ_EL_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGViOTczY2MxNThkYWQ3YWQ5NWEwZSIsImVtYWlsIjoidXN1YXJpbzEwQHRlc3QuY29tIiwiaWF0IjoxNzQyNzQ4NDQ5LCJleHAiOjE3NDI3NTIwNDl9.9HVX_VD6HVbsgbtDCHKrrxeuuKMr6xJlAot3CrWfV4o
 Content-Type: application/json
 
 {
-  "email": "PONER_AQUÍ_EL_EMAIL_INVITADO"
+  "email": "invitado1@test.com"
 }

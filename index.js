@@ -1,13 +1,14 @@
 require("dotenv").config();
-
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 
-dotenv.config();
+// Swagger dependencies
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpecs = require("./docs/swagger");
+
 connectDB();
 
 const app = express();
@@ -17,16 +18,24 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
+// Routes
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
-app.use("/uploads", express.static("uploads")); // Para servir las imágenes de los logos
+// Swagger documentation route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
+// Static file serving for logos
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.send("API Gestión de Usuarios esta funcionando");
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+// Exporta tanto 'app' como 'server' para usarlos en los tests
+module.exports = { app, server };

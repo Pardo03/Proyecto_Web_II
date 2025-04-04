@@ -246,6 +246,7 @@ exports.getMe = async (req, res) => {
         role: user.role,
         personalData: user.personalData,
         companyData: user.companyData,
+        companyId: user.companyId,
         logoUrl: user.logoUrl
       }
     });

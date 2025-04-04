@@ -3,17 +3,17 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario25@test.com",
+  "email": "usuario30@test.com",
   "password": "password123"
 }
 
 ### Validar email con token
 PUT http://localhost:3000/api/auth/validate
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzNmE5OGVkM2U1NTI3NDA0MiIsImVtYWlsIjoidXN1YXJpbzE4QHRlc3QuY29tIiwiaWF0IjoxNzQzMDY3NDYwLCJleHAiOjE3NDMwNzEwNjB9.3plvQGa_rwjNYUbht9WPpVrAH2U1_O-Wws495Llb1l8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiYzQ4NmFjMzU1MWE5M2E3YjQ5ZSIsImVtYWlsIjoidXN1YXJpbzI3QHRlc3QuY29tIiwiaWF0IjoxNzQzNzY0NTUyLCJleHAiOjE3NDM3NjgxNTJ9.q7IIOVHe8bjyliGVovGEY7I-xGsCX3GktkiZ7DocuPs
 
 {
-  "code": "140311"
+  "code": "401479"
 }
 
 ### Login de usuario
@@ -21,8 +21,8 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "usuario25@test.com",
-  "password": "password123"
+  "email": "invitado2@test.com",
+  "password": "0147eafde171"
 }
 
 ### Onboarding: Datos personales
@@ -62,7 +62,7 @@ Content-Type: image/jpeg
 
 ### Obtener mis datos
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzNmE5OGVkM2U1NTI3NDA0MiIsImVtYWlsIjoidXN1YXJpbzE4QHRlc3QuY29tIiwiaWF0IjoxNzQzMDY3NDYwLCJleHAiOjE3NDMwNzEwNjB9.3plvQGa_rwjNYUbht9WPpVrAH2U1_O-Wws495Llb1l8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZjNjNmFjMzU1MWE5M2E3YjRiZSIsImVtYWlsIjoiaW52aXRhZG8yQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1NTQ1LCJleHAiOjE3NDM3NjkxNDV9.Tng7DVBhEDpxMSxgye7wtc-QUqua4ekWIw859mcIAos
 
 ### Desactivar cuenta (soft delete)
 DELETE http://localhost:3000/api/auth/delete
@@ -100,20 +100,20 @@ Content-Type: application/json
 
 ### Invitar compañero con rol guest
 POST http://localhost:3000/api/auth/invite
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZGViOTczY2MxNThkYWQ3YWQ5NWEwZSIsImVtYWlsIjoidXN1YXJpbzEwQHRlc3QuY29tIiwiaWF0IjoxNzQyNzQ4NDQ5LCJleHAiOjE3NDI3NTIwNDl9.9HVX_VD6HVbsgbtDCHKrrxeuuKMr6xJlAot3CrWfV4o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1MDQ3LCJleHAiOjE3NDM3Njg2NDd9.00OkOzBeggB-OIcz1fW1kwPEUo6w0UA1OGvupO0ApOI
 Content-Type: application/json
 
 {
-  "email": "invitado1@test.com"
+  "email": "invitado2@test.com"
 }
 
 ### Crear cliente
 POST http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWU0OTEwNjY1ODI3YmE0ZWE4ZmQ3YyIsImVtYWlsIjoidXN1YXJpbzI1QHRlc3QuY29tIiwiaWF0IjoxNzQzNjY5NjkxLCJleHAiOjE3NDM2NzMyOTF9.9dtR-cBdFac1VRtWdPpZkVn7A8dIgCySpEkrCOX11qk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZjNjNmFjMzU1MWE5M2E3YjRiZSIsImVtYWlsIjoiaW52aXRhZG8yQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1NDY2LCJleHAiOjE3NDM3NjkwNjZ9.z6GG3FRSsrJglZhxcgpSm0XBxodj4f-GB_ab4GK3UU0
 Content-Type: application/json
 
 {
-  "nombre": "Cliente S.L.",
+  "nombre": "Cliente Compartido S.L.",
   "email": "cliente@email.com",
   "telefono": "123456789",
   "direccion": "Calle Central 1",
@@ -121,4 +121,14 @@ Content-Type: application/json
   "provincia": "Madrid",
   "codigoPostal": "28001",
   "pais": "España"
+}
+
+### Actualizar cliente
+PUT http://localhost:3000/api/client/67efbe646ac3551a93a7b4b3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1MDQ3LCJleHAiOjE3NDM3Njg2NDd9.00OkOzBeggB-OIcz1fW1kwPEUo6w0UA1OGvupO0ApOI
+Content-Type: application/json
+
+{
+  "nombre": "Cliente Editado S.L.",
+  "telefono": "999999999"
 }

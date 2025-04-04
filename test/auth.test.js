@@ -1,107 +1,9 @@
-/*
 // Cargar variables de entorno
 require('dotenv').config();
 const supertest = require('supertest');
-const { app, server } = require('../index');
-const mongoose = require('mongoose');
-const request = supertest(app);
-const User = require('../models/User'); // Ajusta la ruta si es necesario
-
-let token; // Token que usaremos en varios tests
-
-// Configuración inicial antes de todos los tests
-beforeAll(async () => {
-  // Conectamos a la base de datos de test
-  await mongoose.connect(process.env.DB_URI_TEST);
-
-  // Eliminamos el usuario de test si ya existía (limpieza previa)
-  await User.deleteMany({ email: 'testuser@example.com' });
-});
-
-// Limpieza final después de todos los tests
-afterAll(async () => {
-  await mongoose.connection.close();
-  server.close();
-});
-
-describe('OnBoarding API', () => {
-  it('should register a new user', async () => {
-    const response = await request
-      .post('/api/auth/register')
-      .send({
-        email: 'testuser@example.com',
-        password: 'Password123!',
-      })
-      .set('Accept', 'application/json')
-      .expect(201);
-
-    expect(response.body.user.email).toBe('testuser@example.com');
-    expect(response.body.user.role).toBe('user');
-
-    token = response.body.token; // Guardamos el token para siguientes tests
-  });
-
-  it('should login with valid credentials', async () => {
-    const response = await request
-      .post('/api/auth/login')
-      .send({
-        email: 'testuser@example.com',
-        password: 'Password123!',
-      })
-      .set('Accept', 'application/json')
-      .expect(200);
-
-    expect(response.body.token).toBeDefined();
-    token = response.body.token; // Por si el token cambia
-  });
-
-  it('should validate email with the correct code', async () => {
-    const user = await User.findOne({ email: 'testuser@example.com' });
-    expect(user).toBeTruthy();
-
-    console.log('Código de validación usado en test:', user.verificationCode);
-
-    const response = await request
-      .put('/api/auth/validate')
-      .send({
-        code: `${user.verificationCode}`,
-      })
-      .set('Authorization', `Bearer ${token}`)
-      .set('Accept', 'application/json')
-      .expect(200);
-
-    expect(response.body.message).toBe('Email verificado correctamente');
-  });
-
-  it('should get user data with valid token', async () => {
-    const response = await request
-      .get('/api/auth/me')
-      .set('Authorization', `Bearer ${token}`)
-      .set('Accept', 'application/json')
-      .expect(200);
-
-    const userEmail = response.body.email || response.body.user?.email;
-    expect(userEmail).toBe('testuser@example.com');
-  });
-
-  it('should delete the user with valid token', async () => {
-    const response = await request
-      .delete('/api/auth/delete')
-      .set('Authorization', `Bearer ${token}`)
-      .set('Accept', 'application/json')
-      .expect(200);
-
-    expect(response.body.message).toBe('Usuario desactivado (soft delete)');
-  });
-});
-*/
-
-// Cargar variables de entorno
-require('dotenv').config();
-const supertest = require('supertest');
-const { app, server } = require('../index');
-const mongoose = require('mongoose');
-const request = supertest(app);
+const app = require("../index");
+const mongoose = require("mongoose");
+const request = require("supertest")(app);
 const User = require('../models/User'); // Asegúrate que la ruta sea correcta
 const path = require('path');
 const fs = require('fs');
@@ -120,7 +22,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await mongoose.connection.close();
-  server.close();
 });
 
 describe('OnBoarding API - Registro, Login y Validación', () => {

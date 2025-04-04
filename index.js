@@ -12,7 +12,6 @@ const swaggerSpecs = require("./docs/swagger");
 connectDB();
 
 const app = express();
-
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
@@ -36,9 +35,12 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
 
-// Exporta tanto 'app' como 'server' para usarlos en los tests
-module.exports = { app, server };
+// SOLO iniciar el servidor si no es un test
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app; // Exporto solo la app para pruebas

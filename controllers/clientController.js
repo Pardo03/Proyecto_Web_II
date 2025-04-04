@@ -57,7 +57,6 @@ exports.createClient = async (req, res) => {
   }
 };
 
-
 // Para editar un cliente que ya existe
 exports.updateClient = async (req, res) => {
   try {
@@ -157,6 +156,108 @@ exports.getClientById = async (req, res) => {
     res.status(200).json({ client });
   } catch (error) {
     console.error("Error al obtener cliente:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Archivar un cliente
+exports.archiveClient = async (req, res) => {
+  try {
+    const client = await Client.findById(req.params.id);
+
+    if (!client || client.isArchived) {
+      return res.status(404).json({ message: "Cliente no encontrado o ya archivado" });
+    }
+
+    const isOwnerOrCompany = client.createdBy.equals(req.user.id) ||
+      (client.companyId && client.companyId.equals(req.user.companyId));
+
+    if (!isOwnerOrCompany) {
+      return res.status(403).json({ message: "No tienes permisos para archivar este cliente" });
+    }
+
+    client.isArchived = true;
+    await client.save();
+
+    res.status(200).json({ message: "Cliente archivado correctamente" });
+  } catch (error) {
+    console.error("Error al archivar cliente:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Eliminar un cliente
+exports.deleteClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const soft = req.query.soft !== "false";
+
+    const client = await Client.findById(id);
+    if (!client) return res.status(404).json({ message: "Cliente no encontrado" });
+
+    const isOwnerOrCompany = client.createdBy.equals(req.user.id) ||
+      (client.companyId && client.companyId.equals(req.user.companyId));
+
+    if (!isOwnerOrCompany) {
+      return res.status(403).json({ message: "No tienes permisos para eliminar este cliente" });
+    }
+
+    if (soft) {
+      client.isArchived = true;
+      await client.save();
+      return res.status(200).json({ message: "Cliente archivado (soft delete)" });
+    } else {
+      await client.deleteOne();
+      return res.status(200).json({ message: "Cliente eliminado permanentemente (hard delete)" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar cliente:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Obtener clientes archivados
+exports.getArchivedClients = async (req, res) => {
+  try {
+    const filter = {
+      isArchived: true,
+      $or: [{ createdBy: req.user.id }]
+    };
+
+    if (req.user.companyId) {
+      filter.$or.push({ companyId: req.user.companyId });
+    }
+
+    const archivedClients = await Client.find(filter);
+    res.status(200).json({ clients: archivedClients });
+  } catch (error) {
+    console.error("Error al listar archivados:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Recuperar un cliente archivado
+exports.recoverClient = async (req, res) => {
+  try {
+    const client = await Client.findById(req.params.id);
+
+    if (!client || !client.isArchived) {
+      return res.status(404).json({ message: "Cliente no archivado o no encontrado" });
+    }
+
+    const isOwnerOrCompany = client.createdBy.equals(req.user.id) ||
+      (client.companyId && client.companyId.equals(req.user.companyId));
+
+    if (!isOwnerOrCompany) {
+      return res.status(403).json({ message: "No tienes permisos para recuperar este cliente" });
+    }
+
+    client.isArchived = false;
+    await client.save();
+
+    res.status(200).json({ message: "Cliente recuperado correctamente" });
+  } catch (error) {
+    console.error("Error al recuperar cliente:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 };

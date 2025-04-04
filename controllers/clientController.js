@@ -110,3 +110,54 @@ exports.updateClient = async (req, res) => {
   }
 };
 
+// Para obtener todos los clientes
+exports.getAllClients = async (req, res) => {
+  try {
+    const currentUser = req.user;
+
+    const filter = {
+      isArchived: false,
+      $or: [
+        { createdBy: currentUser.id }
+      ]
+    };
+
+    if (currentUser.companyId) {
+      filter.$or.push({ companyId: currentUser.companyId });
+    }
+
+    const clients = await Client.find(filter).sort({ createdAt: -1 });
+
+    res.status(200).json({ clients });
+  } catch (error) {
+    console.error("Error al obtener clientes:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+//Para obtener un cliente por ID
+exports.getClientById = async (req, res) => {
+  try {
+    const clientId = req.params.id;
+    const currentUser = req.user;
+
+    const client = await Client.findById(clientId);
+
+    if (!client || client.isArchived) {
+      return res.status(404).json({ message: "Cliente no encontrado o archivado" });
+    }
+
+    const isOwnerOrCompany = client.createdBy.equals(currentUser.id) ||
+      (client.companyId && client.companyId.equals(currentUser.companyId));
+
+    if (!isOwnerOrCompany) {
+      return res.status(403).json({ message: "No tienes acceso a este cliente" });
+    }
+
+    res.status(200).json({ client });
+  } catch (error) {
+    console.error("Error al obtener cliente:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+

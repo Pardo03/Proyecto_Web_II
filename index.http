@@ -21,8 +21,8 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "invitado3@test.com",
-  "password": "fa4a0f4522d2"
+  "email": "usuario30@test.com",
+  "password": "password123"
 }
 
 ### Onboarding: Datos personales
@@ -132,3 +132,11 @@ Content-Type: application/json
   "nombre": "Cliente Editado S.L.",
   "telefono": "999999999"
 }
+
+### Obtener todos los clientes del usuario o compañía
+GET http://localhost:3000/api/client
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY4NzY4LCJleHAiOjE3NDM3NzIzNjh9.dnirCGGTKLxOkWix8bJ98RNh5X96s5AhoAG11-ZaVdE
+
+### Obtener cliente por ID
+GET http://localhost:3000/api/client/67efbfbb6ac3551a93a7b4c3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY4NzY4LCJleHAiOjE3NDM3NzIzNjh9.dnirCGGTKLxOkWix8bJ98RNh5X96s5AhoAG11-ZaVdE

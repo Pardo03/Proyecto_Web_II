@@ -3,7 +3,7 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario30@test.com",
+  "email": "usuario31@test.com",
   "password": "password123"
 }
 
@@ -21,8 +21,8 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "invitado2@test.com",
-  "password": "0147eafde171"
+  "email": "invitado3@test.com",
+  "password": "fa4a0f4522d2"
 }
 
 ### Onboarding: Datos personales
@@ -100,20 +100,20 @@ Content-Type: application/json
 
 ### Invitar compañero con rol guest
 POST http://localhost:3000/api/auth/invite
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1MDQ3LCJleHAiOjE3NDM3Njg2NDd9.00OkOzBeggB-OIcz1fW1kwPEUo6w0UA1OGvupO0ApOI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY2MjUzLCJleHAiOjE3NDM3Njk4NTN9.brGk0V7VOrAUjwh2tPN0P-oG78AxBSYkI7Pe86ba71Q
 Content-Type: application/json
 
 {
-  "email": "invitado2@test.com"
+  "email": "invitado3@test.com"
 }
 
 ### Crear cliente
 POST http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZjNjNmFjMzU1MWE5M2E3YjRiZSIsImVtYWlsIjoiaW52aXRhZG8yQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1NDY2LCJleHAiOjE3NDM3NjkwNjZ9.z6GG3FRSsrJglZhxcgpSm0XBxodj4f-GB_ab4GK3UU0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMzQxM2Q4ZTM0ZGVlMGU2ZjE5MSIsImVtYWlsIjoiaW52aXRhZG8zQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY2Mzc3LCJleHAiOjE3NDM3Njk5Nzd9.tOkG9jtjosOAgYCG1TaSH6WRhSkI_uMCKJ9Hh5FIzGw
 Content-Type: application/json
 
 {
-  "nombre": "Cliente Compartido S.L.",
+  "nombre": "Cliente Exclusivo S.L.",
   "email": "cliente@email.com",
   "telefono": "123456789",
   "direccion": "Calle Central 1",

@@ -14,13 +14,18 @@ exports.createClient = async (req, res) => {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Verificar si ya existe un cliente con ese nombre para el usuario o su compañía
+    //FIX: Validar duplicados por createdBy y opcionalmente companyId
+    const duplicateFilter = [
+      { createdBy: currentUser._id }
+    ];
+
+    if (currentUser.companyId) {
+      duplicateFilter.push({ companyId: currentUser.companyId });
+    }
+
     const existingClient = await Client.findOne({
       nombre,
-      $or: [
-        { createdBy: currentUser._id },
-        { companyId: currentUser.companyId },
-      ],
+      $or: duplicateFilter,
     });
 
     if (existingClient) {
@@ -51,6 +56,7 @@ exports.createClient = async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
 
 // Para editar un cliente que ya existe
 exports.updateClient = async (req, res) => {

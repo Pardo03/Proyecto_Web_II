@@ -135,7 +135,7 @@ Content-Type: application/json
 
 ### Obtener todos los clientes del usuario o compañía
 GET http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzg2NzA1LCJleHAiOjE3NDM3OTAzMDV9.if4PDkkSUL1v8kY1KRDR6HbRvh4Zaf9J_DxxyGL3Ids
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODUxMzEwLCJleHAiOjE3NDM4NTQ5MTB9.l_WBOMT0F42JRwREKEwkEdU64DnRdNLD9Hfo_aq_Ilo
 
 ### Obtener cliente por ID
 GET http://localhost:3000/api/client/67efbfbb6ac3551a93a7b4c3
@@ -157,3 +157,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 DELETE http://localhost:3000/api/client/67efbe646ac3551a93a7b4b3?soft=false
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzg2NzA1LCJleHAiOjE3NDM3OTAzMDV9.if4PDkkSUL1v8kY1KRDR6HbRvh4Zaf9J_DxxyGL3Ids
 
+### Crear un proyecto asociado a un cliente
+POST http://localhost:3000/api/project
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODUxNDE5LCJleHAiOjE3NDM4NTUwMTl9.5PJ0MIDSxd-2mY090VbmnBe8-HteX7jdm5bQfLb9z-8
+Content-Type: application/json
+
+{
+  "nombre": "Proyecto Digitalización 2025",
+  "descripcion": "Albaranes y firma digital",
+  "clienteId": "67efbfbb6ac3551a93a7b4c3"
+}

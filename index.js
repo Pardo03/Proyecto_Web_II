@@ -24,6 +24,9 @@ app.use("/api/auth", authRoutes);
 const clientRoutes = require("./routes/clientRoutes");
 app.use("/api/client", clientRoutes);
 
+const projectRoutes = require("./routes/projectRoutes");
+app.use("/api/project", projectRoutes);
+
 // Swagger documentation route
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 

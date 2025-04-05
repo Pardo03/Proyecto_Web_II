@@ -153,3 +153,114 @@ exports.getProjectById = async (req, res) => {
   }
 };
 
+// Para archivar un proyecto
+exports.archiveProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      isArchived: false,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o ya archivado" });
+    }
+
+    project.isArchived = true;
+    await project.save();
+
+    res.status(200).json({ message: "Proyecto archivado correctamente" });
+  } catch (error) {
+    console.error("Error al archivar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Para recuperar un proyecto archivado
+exports.recoverProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      isArchived: true,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o no está archivado" });
+    }
+
+    project.isArchived = false;
+    await project.save();
+
+    res.status(200).json({ message: "Proyecto recuperado correctamente" });
+  } catch (error) {
+    console.error("Error al recuperar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Para poder ver los proyectos archivados
+exports.getArchivedProjects = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const archived = await Project.find({
+      isArchived: true,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    }).populate("clienteId", "nombre");
+
+    res.status(200).json({ archived });
+  } catch (error) {
+    console.error("Error al listar archivados:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// Para eliminar un proyecto permanentemente 
+exports.deleteProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const soft = req.query.soft !== "false"; // por defecto es true
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o sin permisos" });
+    }
+
+    if (soft) {
+      project.isArchived = true;
+      await project.save();
+      return res.status(200).json({ message: "Proyecto archivado (soft delete)" });
+    } else {
+      await project.deleteOne();
+      return res.status(200).json({ message: "Proyecto eliminado permanentemente (hard delete)" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+

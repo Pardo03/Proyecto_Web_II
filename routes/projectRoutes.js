@@ -5,6 +5,10 @@ const {
   updateProject,
   getAllProjects,
   getProjectById,
+  archiveProject,
+  recoverProject,
+  getArchivedProjects,
+  deleteProject,
 } = require("../controllers/projectController");
 const verifyToken = require("../middlewares/authMiddleware");
 
@@ -47,6 +51,66 @@ const verifyToken = require("../middlewares/authMiddleware");
  *         description: Ya existe un proyecto con ese nombre
  */
 router.post("/", verifyToken, createProject);
+
+/**
+ * @swagger
+ * /api/project/archived:
+ *   get:
+ *     summary: Obtener proyectos archivados del usuario o su empresa
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de proyectos archivados
+ */
+router.get("/archived", verifyToken, getArchivedProjects);
+
+/**
+ * @swagger
+ * /api/project/archive/{id}:
+ *   patch:
+ *     summary: Archivar un proyecto
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del proyecto a archivar
+ *     responses:
+ *       200:
+ *         description: Proyecto archivado correctamente
+ *       404:
+ *         description: Proyecto no encontrado o ya archivado
+ */
+router.patch("/archive/:id", verifyToken, archiveProject);
+
+/**
+ * @swagger
+ * /api/project/recover/{id}:
+ *   patch:
+ *     summary: Recuperar un proyecto archivado
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del proyecto a recuperar
+ *     responses:
+ *       200:
+ *         description: Proyecto recuperado correctamente
+ *       404:
+ *         description: Proyecto no encontrado o no archivado
+ */
+router.patch("/recover/:id", verifyToken, recoverProject);
 
 /**
  * @swagger
@@ -121,5 +185,33 @@ router.get("/", verifyToken, getAllProjects);
  *         description: Proyecto no encontrado o sin permisos
  */
 router.get("/:id", verifyToken, getProjectById);
+
+/**
+ * @swagger
+ * /api/project/{id}:
+ *   delete:
+ *     summary: Eliminar un proyecto (soft o hard delete)
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del proyecto
+ *       - in: query
+ *         name: soft
+ *         schema:
+ *           type: boolean
+ *         description: "true (por defecto) para soft delete, false para eliminar permanentemente"
+ *     responses:
+ *       200:
+ *         description: Proyecto eliminado correctamente
+ *       404:
+ *         description: Proyecto no encontrado
+ */
+router.delete("/:id", verifyToken, deleteProject);
 
 module.exports = router;

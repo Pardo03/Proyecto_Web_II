@@ -163,7 +163,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 Content-Type: application/json
 
 {
-  "nombre": "Proyecto Digitalización 2025",
+  "nombre": "Proyecto 2025",
   "descripcion": "Albaranes y firma digital",
   "clienteId": "67efbfbb6ac3551a93a7b4c3"
+}
+
+### Editar proyecto existente
+PUT http://localhost:3000/api/project/67f11270b4f324009f156fc4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODUxNDE5LCJleHAiOjE3NDM4NTUwMTl9.5PJ0MIDSxd-2mY090VbmnBe8-HteX7jdm5bQfLb9z-8
+Content-Type: application/json
+
+{
+  "nombre": "Proyecto Digitalización Actualizado",
+  "descripcion": "Actualización de información y requisitos"
 }

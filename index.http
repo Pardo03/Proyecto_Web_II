@@ -177,3 +177,11 @@ Content-Type: application/json
   "nombre": "Proyecto Digitalización Actualizado",
   "descripcion": "Actualización de información y requisitos"
 }
+
+### Obtener todos los proyectos del usuario
+GET http://localhost:3000/api/project
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODYxOTc2LCJleHAiOjE3NDM4NjU1NzZ9.OkkqtRdcbtLzpctwHGoTqjfvrMef42TAYnz91AXb8ws
+
+### Obtener proyecto específico
+GET http://localhost:3000/api/project/67f10fa52ad21027da9f9dd5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODYxOTc2LCJleHAiOjE3NDM4NjU1NzZ9.OkkqtRdcbtLzpctwHGoTqjfvrMef42TAYnz91AXb8ws

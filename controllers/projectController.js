@@ -106,3 +106,50 @@ exports.updateProject = async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
+// Para obtener todos los proyectos
+exports.getAllProjects = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const projects = await Project.find({
+      isArchived: false,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    }).populate("clienteId", "nombre email").sort({ createdAt: -1 });
+
+    res.status(200).json({ projects });
+  } catch (error) {
+    console.error("Error al obtener proyectos:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+
+// Para obtener un proyecto específico por ID
+exports.getProjectById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    }).populate("clienteId", "nombre email direccion");
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o sin permisos" });
+    }
+
+    res.status(200).json({ project });
+  } catch (error) {
+    console.error("Error al obtener proyecto por ID:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+

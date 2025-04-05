@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { createProject, updateProject } = require("../controllers/projectController");
+const {
+  createProject,
+  updateProject,
+  getAllProjects,
+  getProjectById,
+} = require("../controllers/projectController");
 const verifyToken = require("../middlewares/authMiddleware");
 
 /**
@@ -79,5 +84,42 @@ router.post("/", verifyToken, createProject);
  *         description: Nombre duplicado para este cliente
  */
 router.put("/:id", verifyToken, updateProject);
+
+/**
+ * @swagger
+ * /api/project:
+ *   get:
+ *     summary: Obtener todos los proyectos del usuario o su compañía
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de proyectos
+ */
+router.get("/", verifyToken, getAllProjects);
+
+/**
+ * @swagger
+ * /api/project/{id}:
+ *   get:
+ *     summary: Obtener un proyecto por su ID
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del proyecto
+ *     responses:
+ *       200:
+ *         description: Proyecto encontrado
+ *       404:
+ *         description: Proyecto no encontrado o sin permisos
+ */
+router.get("/:id", verifyToken, getProjectById);
 
 module.exports = router;

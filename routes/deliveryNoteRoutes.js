@@ -6,7 +6,9 @@ const {
   getAllDeliveryNotes,
   getDeliveryNoteById,
   generatePDFDeliveryNote,
+  signDeliveryNote,
 } = require("../controllers/deliveryNoteController");
+const uploadFirma = require("../middlewares/uploadFirma");
 
 // Crear albarán (simple o con múltiples entradas)
 router.post("/", verifyToken, createDeliveryNote);
@@ -19,5 +21,8 @@ router.get("/:id", verifyToken, getDeliveryNoteById);
 
 // Generar PDF del albarán
 router.get("/pdf/:id", verifyToken, generatePDFDeliveryNote);
+
+// Para firmar el albarán
+router.patch("/sign/:id", verifyToken, uploadFirma.single("firma"), signDeliveryNote);
 
 module.exports = router;

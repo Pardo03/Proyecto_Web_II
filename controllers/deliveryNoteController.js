@@ -135,14 +135,20 @@ exports.generatePDFDeliveryNote = async (req, res) => {
 
     // Firma si existe
     if (note.firmaUrl) {
-      doc.addPage();
-      doc.fontSize(16).text("Firma del cliente:", { align: "left" });
-      doc.image(note.firmaUrl, {
-        fit: [250, 150],
-        align: "center",
-        valign: "center",
-      });
+      const firmaPath = path.join(__dirname, "..", note.firmaUrl.replace(/^\//, "")); // quita la primera / si existe
+      if (fs.existsSync(firmaPath)) {
+        doc.addPage();
+        doc.fontSize(16).text("Firma del cliente:", { align: "left" });
+        doc.image(firmaPath, {
+          fit: [250, 150],
+          align: "center",
+          valign: "center",
+        });
+      } else {
+        console.warn("Firma no encontrada en:", firmaPath);
+      }
     }
+    
 
     doc.end();
 
@@ -154,5 +160,36 @@ exports.generatePDFDeliveryNote = async (req, res) => {
   } catch (error) {
     console.error("Error al generar PDF:", error);
     res.status(500).json({ message: "Error al generar el PDF" });
+  }
+};
+
+// Para marcar el alabarán como firmado y guardar
+exports.signDeliveryNote = async (req, res) => {
+  try {
+    const deliveryNoteId = req.params.id;
+    const userId = req.user.id;
+
+    const note = await DeliveryNote.findOne({ _id: deliveryNoteId, usuario: userId });
+
+    if (!note) {
+      return res.status(404).json({ message: "Albarán no encontrado" });
+    }
+
+    if (note.firmada) {
+      return res.status(400).json({ message: "El albarán ya ha sido firmado" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No se ha subido ninguna imagen de firma" });
+    }
+
+    note.firmada = true;
+    note.firmaUrl = `uploads/firmas/${req.file.filename}`;
+    await note.save();
+
+    res.status(200).json({ message: "Albarán firmado correctamente", deliveryNote: note });
+  } catch (error) {
+    console.error("Error al firmar albarán:", error);
+    res.status(500).json({ message: "Error al firmar albarán" });
   }
 };

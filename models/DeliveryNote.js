@@ -1,45 +1,63 @@
 const mongoose = require("mongoose");
 
-const deliveryNoteSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  client: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Client",
-    required: true,
-  },
-  project: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Project",
-    required: true,
-  },
-  horas: [
-    {
-      persona: { type: String },
-      horas: { type: Number },
-      descripcion: { type: String },
-    },
-  ],
-  materiales: [
-    {
-      nombre: { type: String },
-      cantidad: { type: Number },
-      descripcion: { type: String },
-    },
-  ],
-  firmado: {
-    type: Boolean,
-    default: false,
-  },
-  firmaUrl: {
+const itemSchema = new mongoose.Schema({
+  tipo: {
     type: String,
+    enum: ["hora", "material"],
+    required: true,
   },
-  pdfUrl: {
+  descripcion: {
     type: String,
+    required: true,
   },
-}, { timestamps: true });
+  cantidad: {
+    type: Number,
+    required: true,
+  },
+  precioUnitario: {
+    type: Number,
+    required: true,
+  },
+});
+
+const deliveryNoteSchema = new mongoose.Schema(
+  {
+    proyecto: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+    },
+    cliente: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+    },
+    usuario: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    items: [itemSchema],
+    total: {
+      type: Number,
+      required: true,
+    },
+    firmada: {
+      type: Boolean,
+      default: false,
+    },
+    firmaUrl: {
+      type: String, // Enlace a imagen de la firma (en IPFS o cloud)
+    },
+    pdfUrl: {
+      type: String, // Enlace al PDF generado (si se sube a la nube)
+    },
+    archivado: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("DeliveryNote", deliveryNoteSchema);

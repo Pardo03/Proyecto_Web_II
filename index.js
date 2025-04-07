@@ -27,6 +27,9 @@ app.use("/api/client", clientRoutes);
 const projectRoutes = require("./routes/projectRoutes");
 app.use("/api/project", projectRoutes);
 
+const deliveryNoteRoutes = require("./routes/deliveryNoteRoutes");
+app.use("/api/deliverynote", deliveryNoteRoutes);
+
 // Swagger documentation route
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 

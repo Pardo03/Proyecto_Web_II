@@ -109,7 +109,7 @@ Content-Type: application/json
 
 ### Crear cliente
 POST http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMzQxM2Q4ZTM0ZGVlMGU2ZjE5MSIsImVtYWlsIjoiaW52aXRhZG8zQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY2Mzc3LCJleHAiOjE3NDM3Njk5Nzd9.tOkG9jtjosOAgYCG1TaSH6WRhSkI_uMCKJ9Hh5FIzGw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MDQ3MDIzLCJleHAiOjE3NDQwNTA2MjN9.tluLew1ll6j_d-gGGzf9nCwNUbmw-ABBRgQADFIaRK4
 Content-Type: application/json
 
 {
@@ -135,7 +135,7 @@ Content-Type: application/json
 
 ### Obtener todos los clientes del usuario o compañía
 GET http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODUxMzEwLCJleHAiOjE3NDM4NTQ5MTB9.l_WBOMT0F42JRwREKEwkEdU64DnRdNLD9Hfo_aq_Ilo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODY2NjU3LCJleHAiOjE3NDM4NzAyNTd9.FpwLqdPyybYNeOPJZJuGlht7lFIAtg1UQWuQz5RBPx8
 
 ### Obtener cliente por ID
 GET http://localhost:3000/api/client/67efbfbb6ac3551a93a7b4c3
@@ -159,13 +159,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 
 ### Crear un proyecto asociado a un cliente
 POST http://localhost:3000/api/project
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODUxNDE5LCJleHAiOjE3NDM4NTUwMTl9.5PJ0MIDSxd-2mY090VbmnBe8-HteX7jdm5bQfLb9z-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MDQ3MDIzLCJleHAiOjE3NDQwNTA2MjN9.tluLew1ll6j_d-gGGzf9nCwNUbmw-ABBRgQADFIaRK4
 Content-Type: application/json
 
 {
   "nombre": "Proyecto 2025",
   "descripcion": "Albaranes y firma digital",
-  "clienteId": "67efbfbb6ac3551a93a7b4c3"
+  "clienteId": "67f40d228fe119dca6e64494"
 }
 
 ### Editar proyecto existente
@@ -180,11 +180,11 @@ Content-Type: application/json
 
 ### Obtener todos los proyectos del usuario
 GET http://localhost:3000/api/project
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODYxOTc2LCJleHAiOjE3NDM4NjU1NzZ9.OkkqtRdcbtLzpctwHGoTqjfvrMef42TAYnz91AXb8ws
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MDQ3MDIzLCJleHAiOjE3NDQwNTA2MjN9.tluLew1ll6j_d-gGGzf9nCwNUbmw-ABBRgQADFIaRK4
 
 ### Obtener proyecto específico
 GET http://localhost:3000/api/project/67f10fa52ad21027da9f9dd5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODYxOTc2LCJleHAiOjE3NDM4NjU1NzZ9.OkkqtRdcbtLzpctwHGoTqjfvrMef42TAYnz91AXb8ws
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODcyNDM0LCJleHAiOjE3NDM4NzYwMzR9.klBiQnoDofq-5iNCBvx02Oa_I7Em1sYepUIzICcq0mk
 
 ### Archivar proyecto
 PATCH http://localhost:3000/api/project/archive/67f11270b4f324009f156fc4
@@ -201,3 +201,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 ### Eliminar proyecto permanentemente (hard delete)
 DELETE http://localhost:3000/api/project/67f11270b4f324009f156fc4?soft=false
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODYxOTc2LCJleHAiOjE3NDM4NjU1NzZ9.OkkqtRdcbtLzpctwHGoTqjfvrMef42TAYnz91AXb8ws
+
+
+## ALBARÁN
+
+### Crear albarán con una entrada de horas
+POST http://localhost:3000/api/deliverynote
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MDQ3MDIzLCJleHAiOjE3NDQwNTA2MjN9.tluLew1ll6j_d-gGGzf9nCwNUbmw-ABBRgQADFIaRK4
+Content-Type: application/json
+
+{
+  "proyecto": "67f10fa52ad21027da9f9dd5",
+  "cliente": "67f40d228fe119dca6e64494",
+  "items": [
+    {
+      "tipo": "material",
+      "descripcion": "Cables de red CAT6",
+      "cantidad": 100,
+      "precioUnitario": 0.85
+    }
+  ]
+}
+
+### Obtener todos los albaranes
+GET http://localhost:3000/api/deliverynote
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MDQ3MDIzLCJleHAiOjE3NDQwNTA2MjN9.tluLew1ll6j_d-gGGzf9nCwNUbmw-ABBRgQADFIaRK4
+
+### Ver albarán por ID
+GET http://localhost:3000/api/deliverynote/67f40f77d319b50b6835c2ed
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MDQ3MDIzLCJleHAiOjE3NDQwNTA2MjN9.tluLew1ll6j_d-gGGzf9nCwNUbmw-ABBRgQADFIaRK4
+

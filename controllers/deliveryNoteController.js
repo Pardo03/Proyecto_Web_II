@@ -154,7 +154,7 @@ exports.generatePDFDeliveryNote = async (req, res) => {
 
     writeStream.on("finish", () => {
       res.download(filePath, `albaran_${id}.pdf`, () => {
-        fs.unlinkSync(filePath); // Opcional: elimina después de enviar
+        //fs.unlinkSync(filePath); // Esto que es opcional, basicamente elimina después de enviar
       });
     });
   } catch (error) {

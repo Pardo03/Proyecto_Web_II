@@ -1,8 +1,13 @@
 const DeliveryNote = require("../models/DeliveryNote");
 const Project = require("../models/Project");
 const Client = require("../models/Client");
+const PDFDocument = require("pdfkit");
+const fs = require("fs");
+const path = require("path");
+const axios = require("axios"); // 👈 Usamos axios en lugar de fetch
+const { uploadToPinata } = require("../utils/handleUploadIPFS");
 
-// Para crear un albarán
+// Crear albarán
 exports.createDeliveryNote = async (req, res) => {
   try {
     const { proyecto, cliente, items } = req.body;
@@ -12,18 +17,13 @@ exports.createDeliveryNote = async (req, res) => {
       return res.status(400).json({ message: "Todos los campos son obligatorios." });
     }
 
-    // Verificar proyecto y cliente existen
     const validProject = await Project.findById(proyecto);
     const validClient = await Client.findById(cliente);
-
     if (!validProject || !validClient) {
       return res.status(404).json({ message: "Proyecto o cliente no válido." });
     }
 
-    const total = items.reduce(
-      (sum, item) => sum + item.cantidad * item.precioUnitario,
-      0
-    );
+    const total = items.reduce((sum, item) => sum + item.cantidad * item.precioUnitario, 0);
 
     const newNote = new DeliveryNote({
       proyecto,
@@ -41,7 +41,7 @@ exports.createDeliveryNote = async (req, res) => {
   }
 };
 
-//Para obtener todos los albaranes
+// Obtener todos los albaranes
 exports.getAllDeliveryNotes = async (req, res) => {
   try {
     const usuarioId = req.user.id;
@@ -57,7 +57,7 @@ exports.getAllDeliveryNotes = async (req, res) => {
   }
 };
 
-//Para obtener un albarán por ID
+// Obtener albarán por ID
 exports.getDeliveryNoteById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -68,9 +68,7 @@ exports.getDeliveryNoteById = async (req, res) => {
       .populate("proyecto")
       .populate("usuario");
 
-    if (!note) {
-      return res.status(404).json({ message: "Albarán no encontrado" });
-    }
+    if (!note) return res.status(404).json({ message: "Albarán no encontrado" });
 
     res.status(200).json({ deliveryNote: note });
   } catch (error) {
@@ -79,14 +77,7 @@ exports.getDeliveryNoteById = async (req, res) => {
   }
 };
 
-
-//Esta es la parte para generar el PDF del albarán
-const PDFDocument = require("pdfkit");
-const fs = require("fs");
-const path = require("path");
-const User = require("../models/User");
-
-// GET /api/deliverynote/pdf/:id
+// Descargar PDF
 exports.generatePDFDeliveryNote = async (req, res) => {
   try {
     const { id } = req.params;
@@ -101,7 +92,6 @@ exports.generatePDFDeliveryNote = async (req, res) => {
 
     const isOwner = note.usuario._id.toString() === usuarioId;
     const isGuest = req.user.role === "guest" && req.user.owner?.toString() === note.usuario._id.toString();
-
     if (!isOwner && !isGuest) {
       return res.status(403).json({ message: "Acceso no autorizado" });
     }
@@ -111,18 +101,12 @@ exports.generatePDFDeliveryNote = async (req, res) => {
     const writeStream = fs.createWriteStream(filePath);
     doc.pipe(writeStream);
 
-    // Encabezado
-    doc.fontSize(18).text("ALBARÁN", { align: "center" });
-    doc.moveDown();
-
+    doc.fontSize(18).text("ALBARÁN", { align: "center" }).moveDown();
     doc.fontSize(12).text(`Usuario: ${note.usuario.nombre || note.usuario.email}`);
     doc.text(`Cliente: ${note.cliente.nombre}`);
     doc.text(`Proyecto: ${note.proyecto.nombre}`);
-    doc.text(`Fecha: ${new Date(note.createdAt).toLocaleDateString()}`);
-    doc.moveDown();
-
-    doc.fontSize(14).text("Líneas:");
-    doc.moveDown(0.5);
+    doc.text(`Fecha: ${new Date(note.createdAt).toLocaleDateString()}`).moveDown();
+    doc.fontSize(14).text("Líneas:").moveDown(0.5);
 
     note.items.forEach((item, i) => {
       doc.fontSize(12).text(
@@ -133,37 +117,18 @@ exports.generatePDFDeliveryNote = async (req, res) => {
     doc.moveDown();
     doc.fontSize(14).text(`Total: ${note.total} €`);
 
-    // Firma si existe (IPFS o local)
     if (note.firmaUrl) {
       try {
-        let firmaPath = "";
+        const response = await axios.get(note.firmaUrl, { responseType: "arraybuffer" });
+        const buffer = Buffer.from(response.data, "binary");
+        const firmaPath = path.join(__dirname, `../uploads/temp_firma_${id}.png`);
+        fs.writeFileSync(firmaPath, buffer);
 
-        if (note.firmaUrl.startsWith("http")) {
-          const imageRequest = await fetch(note.firmaUrl);
-          if (!imageRequest.ok) throw new Error("No se pudo descargar la firma desde IPFS");
+        doc.addPage();
+        doc.fontSize(16).text("Firma del cliente:", { align: "left" });
+        doc.image(firmaPath, { fit: [250, 150], align: "center", valign: "center" });
 
-          const buffer = await imageRequest.buffer();
-          firmaPath = path.join(__dirname, `../uploads/temp_firma_${id}.png`);
-          fs.writeFileSync(firmaPath, buffer);
-        } else {
-          // Local (e.g., uploads/firmas/filename.png)
-          firmaPath = path.join(__dirname, "..", note.firmaUrl);
-        }
-
-        if (fs.existsSync(firmaPath)) {
-          doc.addPage();
-          doc.fontSize(16).text("Firma del cliente:", { align: "left" });
-          doc.image(firmaPath, {
-            fit: [250, 150],
-            align: "center",
-            valign: "center",
-          });
-        }
-
-        // Limpieza de temporal
-        if (firmaPath.includes("temp_firma_")) {
-          fs.unlinkSync(firmaPath);
-        }
+        fs.unlinkSync(firmaPath);
       } catch (err) {
         console.warn("⚠️ No se pudo incluir la firma:", err.message);
       }
@@ -172,9 +137,7 @@ exports.generatePDFDeliveryNote = async (req, res) => {
     doc.end();
 
     writeStream.on("finish", () => {
-      res.download(filePath, `albaran_${id}.pdf`, () => {
-        // fs.unlinkSync(filePath);
-      });
+      res.download(filePath, `albaran_${id}.pdf`);
     });
   } catch (error) {
     console.error("Error al generar PDF:", error);
@@ -182,34 +145,70 @@ exports.generatePDFDeliveryNote = async (req, res) => {
   }
 };
 
-// Para marcar el alabarán como firmado y guardar
-const { uploadToPinata } = require("../utils/handleUploadIPFS");
-
+// Firmar albarán y subir PDF a Pinata
 exports.signDeliveryNote = async (req, res) => {
   try {
     const deliveryNoteId = req.params.id;
     const userId = req.user.id;
 
-    const note = await DeliveryNote.findOne({ _id: deliveryNoteId, usuario: userId });
+    const note = await DeliveryNote.findOne({ _id: deliveryNoteId, usuario: userId })
+      .populate("cliente")
+      .populate("proyecto")
+      .populate("usuario");
 
     if (!note) return res.status(404).json({ message: "Albarán no encontrado" });
-    if (note.firmada) return res.status(400).json({ message: "El albarán ya ha sido firmado" });
-    if (!req.file) return res.status(400).json({ message: "No se ha subido ninguna imagen de firma" });
+    if (note.firmada) return res.status(400).json({ message: "Ya está firmado" });
+    if (!req.file) return res.status(400).json({ message: "Imagen de firma requerida" });
 
-    // Subir imagen a IPFS
-    const fileBuffer = req.file.buffer;
-    const fileName = req.file.originalname;
+    const pinataImg = await uploadToPinata(req.file.buffer, req.file.originalname);
+    const firmaIPFSUrl = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${pinataImg.IpfsHash}`;
 
-    const pinataResponse = await uploadToPinata(fileBuffer, fileName);
-    const ipfsHash = pinataResponse.IpfsHash;
-    const ipfsUrl = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${ipfsHash}`;
-
-    // Actualizar albarán
     note.firmada = true;
-    note.firmaUrl = ipfsUrl;
-    await note.save();
+    note.firmaUrl = firmaIPFSUrl;
 
-    res.status(200).json({ message: "Albarán firmado correctamente", deliveryNote: note });
+    const doc = new PDFDocument();
+    const buffers = [];
+
+    doc.on("data", buffers.push.bind(buffers));
+    doc.on("end", async () => {
+      const pdfBuffer = Buffer.concat(buffers);
+      const pdfPinata = await uploadToPinata(pdfBuffer, `albaran_${deliveryNoteId}_firmado.pdf`);
+      const pdfIPFSUrl = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${pdfPinata.IpfsHash}`;
+
+      note.pdfUrl = pdfIPFSUrl;
+      await note.save();
+
+      res.status(200).json({
+        message: "Albarán firmado correctamente y PDF subido a IPFS",
+        deliveryNote: note,
+      });
+    });
+
+    doc.fontSize(18).text("ALBARÁN", { align: "center" }).moveDown();
+    doc.fontSize(12).text(`Usuario: ${note.usuario.nombre || note.usuario.email}`);
+    doc.text(`Cliente: ${note.cliente.nombre}`);
+    doc.text(`Proyecto: ${note.proyecto.nombre}`);
+    doc.text(`Fecha: ${new Date(note.createdAt).toLocaleDateString()}`).moveDown();
+    doc.fontSize(14).text("Líneas:");
+    note.items.forEach((item, i) => {
+      doc.fontSize(12).text(
+        `${i + 1}. [${item.tipo}] ${item.descripcion} - Cantidad: ${item.cantidad}, Precio unitario: ${item.precioUnitario}€`
+      );
+    });
+    doc.moveDown();
+    doc.fontSize(14).text(`Total: ${note.total} €`);
+
+    const response = await axios.get(firmaIPFSUrl, { responseType: "arraybuffer" });
+    const imageBuffer = Buffer.from(response.data, "binary");
+    const tempPath = path.join(__dirname, `../uploads/temp_firma_${deliveryNoteId}.png`);
+    fs.writeFileSync(tempPath, imageBuffer);
+
+    doc.addPage();
+    doc.fontSize(16).text("Firma del cliente:", { align: "left" });
+    doc.image(tempPath, { fit: [250, 150], align: "center", valign: "center" });
+    fs.unlinkSync(tempPath);
+
+    doc.end();
   } catch (error) {
     console.error("Error al firmar albarán:", error);
     res.status(500).json({ message: "Error al firmar albarán" });

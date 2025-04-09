@@ -207,7 +207,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 
 ### Crear albarán con una entrada de horas
 POST http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTg5Mjc5LCJleHAiOjE3NDQxOTI4Nzl9.bLO_aDrFvd6Kt4vYe9dm5PCL1G0ohSDkqgTlugQktCs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
 Content-Type: application/json
 
 {
@@ -215,45 +215,29 @@ Content-Type: application/json
   "cliente": "67f40d228fe119dca6e64494",
   "items": [
     {
-      "tipo": "hora",
-      "descripcion": "Instalacion especial",
-      "cantidad": 10,
-      "precioUnitario": 30
+      "tipo": "material",
+      "descripcion": "Cables de acero",
+      "cantidad": 13,
+      "precioUnitario": 11
     }
   ]
 }
 
 ### Obtener todos los albaranes
 GET http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTg5Mjc5LCJleHAiOjE3NDQxOTI4Nzl9.bLO_aDrFvd6Kt4vYe9dm5PCL1G0ohSDkqgTlugQktCs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
 
 ### Ver albarán por ID
-GET http://localhost:3000/api/deliverynote/67f640458b1e2ec096f16311
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTg5Mjc5LCJleHAiOjE3NDQxOTI4Nzl9.bLO_aDrFvd6Kt4vYe9dm5PCL1G0ohSDkqgTlugQktCs
+GET http://localhost:3000/api/deliverynote/67f6c0491558f463756e2945
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
 
 ### Descargar PDF del albarán
-GET http://localhost:3000/api/deliverynote/pdf/67f640458b1e2ec096f16311
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTkzMjQxLCJleHAiOjE3NDQxOTY4NDF9.cHskEOgF9LyJMtZbOqSKv0BCnmAegZiWCYIEgeCQhlw
-
-### Firmar albarán subiendo imagen
-PATCH http://localhost:3000/api/deliverynote/sign/67f5733d8e371670ab3da52d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTg5Mjc5LCJleHAiOjE3NDQxOTI4Nzl9.bLO_aDrFvd6Kt4vYe9dm5PCL1G0ohSDkqgTlugQktCs
-Content-Type: multipart/form-data; boundary=BOUNDARY
-
---BOUNDARY
-Content-Disposition: form-data; name="firma"; filename="firma.png"
-Content-Type: image/png
-
-< ./test_assets/firma.png
---BOUNDARY--
-
-### Descargar el PDF del albarán firmado
-GET http://localhost:3000/api/deliverynote/pdf/67f5733d8e371670ab3da52d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTg5Mjc5LCJleHAiOjE3NDQxOTI4Nzl9.bLO_aDrFvd6Kt4vYe9dm5PCL1G0ohSDkqgTlugQktCs
+GET http://localhost:3000/api/deliverynote/pdf/67f6c5763f23b40b4e187dd3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
 
 ### Firmar albarán subiendo imagen a IPFS
-PATCH http://localhost:3000/api/deliverynote/sign/67f640458b1e2ec096f16311
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTg5Mjc5LCJleHAiOjE3NDQxOTI4Nzl9.bLO_aDrFvd6Kt4vYe9dm5PCL1G0ohSDkqgTlugQktCs
+PATCH http://localhost:3000/api/deliverynote/sign/67f6c5763f23b40b4e187dd3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
 Content-Type: multipart/form-data; boundary=BOUNDARY
 
 --BOUNDARY
@@ -264,5 +248,9 @@ Content-Type: image/png
 --BOUNDARY--
 
 ### Descargar PDF del albarán firmado (firma cargada desde IPFS)
-GET http://localhost:3000/api/deliverynote/pdf/67f5733d8e371670ab3da52d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTkzMjQxLCJleHAiOjE3NDQxOTY4NDF9.cHskEOgF9LyJMtZbOqSKv0BCnmAegZiWCYIEgeCQhlw
+GET http://localhost:3000/api/deliverynote/pdf/67f6c5763f23b40b4e187dd3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
+
+### Ver un albarán específico (comprobar firma y pdfUrl)
+GET http://localhost:3000/api/deliverynote/67f6c5763f23b40b4e187dd3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjI2NTEyLCJleHAiOjE3NDQyMzAxMTJ9.kK8it5MT1X7UMjgkE3BOwlgQD68_bj_gWlAEgghaDLs

@@ -130,7 +130,7 @@ exports.generatePDFDeliveryNote = async (req, res) => {
 
         fs.unlinkSync(firmaPath);
       } catch (err) {
-        console.warn("⚠️ No se pudo incluir la firma:", err.message);
+        console.warn("No se pudo incluir la firma:", err.message);
       }
     }
 
@@ -212,5 +212,30 @@ exports.signDeliveryNote = async (req, res) => {
   } catch (error) {
     console.error("Error al firmar albarán:", error);
     res.status(500).json({ message: "Error al firmar albarán" });
+  }
+};
+
+// DELETE /api/deliverynote/:id
+exports.deleteDeliveryNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const usuarioId = req.user.id;
+
+    const note = await DeliveryNote.findOne({ _id: id, usuario: usuarioId });
+
+    if (!note) {
+      return res.status(404).json({ message: "Albarán no encontrado" });
+    }
+
+    if (note.firmada) {
+      return res.status(403).json({ message: "No se puede eliminar un albarán ya firmado" });
+    }
+
+    await DeliveryNote.deleteOne({ _id: id });
+    res.status(200).json({ message: "Albarán eliminado correctamente" });
+
+  } catch (error) {
+    console.error("Error al eliminar albarán:", error);
+    res.status(500).json({ message: "Error al eliminar albarán" });
   }
 };

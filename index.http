@@ -207,7 +207,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 
 ### Crear albarán con una entrada de horas
 POST http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjI2NTEyLCJleHAiOjE3NDQyMzAxMTJ9.kK8it5MT1X7UMjgkE3BOwlgQD68_bj_gWlAEgghaDLs
 Content-Type: application/json
 
 {
@@ -215,17 +215,17 @@ Content-Type: application/json
   "cliente": "67f40d228fe119dca6e64494",
   "items": [
     {
-      "tipo": "material",
-      "descripcion": "Cables de acero",
-      "cantidad": 13,
-      "precioUnitario": 11
+      "tipo": "hora",
+      "descripcion": "Instalacion plus",
+      "cantidad": 8,
+      "precioUnitario": 13
     }
   ]
 }
 
 ### Obtener todos los albaranes
 GET http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjIyODczLCJleHAiOjE3NDQyMjY0NzN9.hX7WrUS58aip3paK01hvF7h_7aT132IjRz05IHDCldw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjI2NTEyLCJleHAiOjE3NDQyMzAxMTJ9.kK8it5MT1X7UMjgkE3BOwlgQD68_bj_gWlAEgghaDLs
 
 ### Ver albarán por ID
 GET http://localhost:3000/api/deliverynote/67f6c0491558f463756e2945
@@ -253,4 +253,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 
 ### Ver un albarán específico (comprobar firma y pdfUrl)
 GET http://localhost:3000/api/deliverynote/67f6c5763f23b40b4e187dd3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjI2NTEyLCJleHAiOjE3NDQyMzAxMTJ9.kK8it5MT1X7UMjgkE3BOwlgQD68_bj_gWlAEgghaDLs
+
+### Eliminar albarán no firmado
+DELETE http://localhost:3000/api/deliverynote/67f6cb88f876057ffc5ad4d3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjI2NTEyLCJleHAiOjE3NDQyMzAxMTJ9.kK8it5MT1X7UMjgkE3BOwlgQD68_bj_gWlAEgghaDLs

@@ -7,6 +7,7 @@ const {
   getDeliveryNoteById,
   generatePDFDeliveryNote,
   signDeliveryNote,
+  deleteDeliveryNote,
 } = require("../controllers/deliveryNoteController");
 const uploadFirma = require("../middlewares/uploadFirma");
 
@@ -24,5 +25,8 @@ router.get("/pdf/:id", verifyToken, generatePDFDeliveryNote);
 
 // Para firmar el albarán
 router.patch("/sign/:id", verifyToken, uploadFirma.single("firma"), signDeliveryNote);
+
+// Para eliminar un albarán
+router.delete("/:id", verifyToken, deleteDeliveryNote);
 
 module.exports = router;

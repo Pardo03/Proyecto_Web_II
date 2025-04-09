@@ -133,28 +133,47 @@ exports.generatePDFDeliveryNote = async (req, res) => {
     doc.moveDown();
     doc.fontSize(14).text(`Total: ${note.total} €`);
 
-    // Firma si existe
+    // Firma si existe (IPFS o local)
     if (note.firmaUrl) {
-      const firmaPath = path.join(__dirname, "..", note.firmaUrl.replace(/^\//, "")); // quita la primera / si existe
-      if (fs.existsSync(firmaPath)) {
-        doc.addPage();
-        doc.fontSize(16).text("Firma del cliente:", { align: "left" });
-        doc.image(firmaPath, {
-          fit: [250, 150],
-          align: "center",
-          valign: "center",
-        });
-      } else {
-        console.warn("Firma no encontrada en:", firmaPath);
+      try {
+        let firmaPath = "";
+
+        if (note.firmaUrl.startsWith("http")) {
+          const imageRequest = await fetch(note.firmaUrl);
+          if (!imageRequest.ok) throw new Error("No se pudo descargar la firma desde IPFS");
+
+          const buffer = await imageRequest.buffer();
+          firmaPath = path.join(__dirname, `../uploads/temp_firma_${id}.png`);
+          fs.writeFileSync(firmaPath, buffer);
+        } else {
+          // Local (e.g., uploads/firmas/filename.png)
+          firmaPath = path.join(__dirname, "..", note.firmaUrl);
+        }
+
+        if (fs.existsSync(firmaPath)) {
+          doc.addPage();
+          doc.fontSize(16).text("Firma del cliente:", { align: "left" });
+          doc.image(firmaPath, {
+            fit: [250, 150],
+            align: "center",
+            valign: "center",
+          });
+        }
+
+        // Limpieza de temporal
+        if (firmaPath.includes("temp_firma_")) {
+          fs.unlinkSync(firmaPath);
+        }
+      } catch (err) {
+        console.warn("⚠️ No se pudo incluir la firma:", err.message);
       }
     }
-    
 
     doc.end();
 
     writeStream.on("finish", () => {
       res.download(filePath, `albaran_${id}.pdf`, () => {
-        //fs.unlinkSync(filePath); // Esto que es opcional, basicamente elimina después de enviar
+        // fs.unlinkSync(filePath);
       });
     });
   } catch (error) {
@@ -164,6 +183,8 @@ exports.generatePDFDeliveryNote = async (req, res) => {
 };
 
 // Para marcar el alabarán como firmado y guardar
+const { uploadToPinata } = require("../utils/handleUploadIPFS");
+
 exports.signDeliveryNote = async (req, res) => {
   try {
     const deliveryNoteId = req.params.id;
@@ -171,20 +192,21 @@ exports.signDeliveryNote = async (req, res) => {
 
     const note = await DeliveryNote.findOne({ _id: deliveryNoteId, usuario: userId });
 
-    if (!note) {
-      return res.status(404).json({ message: "Albarán no encontrado" });
-    }
+    if (!note) return res.status(404).json({ message: "Albarán no encontrado" });
+    if (note.firmada) return res.status(400).json({ message: "El albarán ya ha sido firmado" });
+    if (!req.file) return res.status(400).json({ message: "No se ha subido ninguna imagen de firma" });
 
-    if (note.firmada) {
-      return res.status(400).json({ message: "El albarán ya ha sido firmado" });
-    }
+    // Subir imagen a IPFS
+    const fileBuffer = req.file.buffer;
+    const fileName = req.file.originalname;
 
-    if (!req.file) {
-      return res.status(400).json({ message: "No se ha subido ninguna imagen de firma" });
-    }
+    const pinataResponse = await uploadToPinata(fileBuffer, fileName);
+    const ipfsHash = pinataResponse.IpfsHash;
+    const ipfsUrl = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${ipfsHash}`;
 
+    // Actualizar albarán
     note.firmada = true;
-    note.firmaUrl = `uploads/firmas/${req.file.filename}`;
+    note.firmaUrl = ipfsUrl;
     await note.save();
 
     res.status(200).json({ message: "Albarán firmado correctamente", deliveryNote: note });

@@ -4,7 +4,7 @@ const Client = require("../models/Client");
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
-const axios = require("axios"); // 👈 Usamos axios en lugar de fetch
+const axios = require("axios");
 const { uploadToPinata } = require("../utils/handleUploadIPFS");
 
 // Crear albarán
@@ -215,7 +215,7 @@ exports.signDeliveryNote = async (req, res) => {
   }
 };
 
-// DELETE /api/deliverynote/:id
+// Eliminar alabaran no firmado
 exports.deleteDeliveryNote = async (req, res) => {
   try {
     const { id } = req.params;

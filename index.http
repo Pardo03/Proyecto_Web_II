@@ -1,19 +1,19 @@
-### Registro de usuario y obtener token
+### Registro de usuario con test envío email
 POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario31@test.com",
+  "email": "pruebascyber8@gmail.com",
   "password": "password123"
 }
 
 ### Validar email con token
 PUT http://localhost:3000/api/auth/validate
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiYzQ4NmFjMzU1MWE5M2E3YjQ5ZSIsImVtYWlsIjoidXN1YXJpbzI3QHRlc3QuY29tIiwiaWF0IjoxNzQzNzY0NTUyLCJleHAiOjE3NDM3NjgxNTJ9.q7IIOVHe8bjyliGVovGEY7I-xGsCX3GktkiZ7DocuPs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MGU4NTQyYWFjNjQyN2Q4MDVkN2IyNyIsImVtYWlsIjoicHJ1ZWJhc2N5YmVyOEBnbWFpbC5jb20iLCJpYXQiOjE3NDU3ODIwODQsImV4cCI6MTc0NTc4NTY4NH0.KLGgRves8eoxplv9R7oFh7tYMBihvLLl5qsOdPFupz4
 
 {
-  "code": "401479"
+  "code": "780976"
 }
 
 ### Login de usuario
@@ -21,7 +21,7 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "usuario30@test.com",
+  "email": "pruebascyber8@gmail.com",
   "password": "password123"
 }
 
@@ -62,7 +62,7 @@ Content-Type: image/jpeg
 
 ### Obtener mis datos
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZjNjNmFjMzU1MWE5M2E3YjRiZSIsImVtYWlsIjoiaW52aXRhZG8yQHRlc3QuY29tIiwiaWF0IjoxNzQzNzY1NTQ1LCJleHAiOjE3NDM3NjkxNDV9.Tng7DVBhEDpxMSxgye7wtc-QUqua4ekWIw859mcIAos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MGU4NTQyYWFjNjQyN2Q4MDVkN2IyNyIsImVtYWlsIjoicHJ1ZWJhc2N5YmVyOEBnbWFpbC5jb20iLCJpYXQiOjE3NDU3ODIzNjIsImV4cCI6MTc0NTc4NTk2Mn0.ZpfHeN9Nz0cXDCnU5ytE6qN443tYuAE2gFY2-EjwHNs
 
 ### Desactivar cuenta (soft delete)
 DELETE http://localhost:3000/api/auth/delete
@@ -207,7 +207,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 
 ### Crear albarán con una entrada de horas
 POST http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 Content-Type: application/json
 
 {
@@ -216,28 +216,28 @@ Content-Type: application/json
   "items": [
     {
       "tipo": "hora",
-      "descripcion": "Instalacion pls extra",
-      "cantidad": 12,
-      "precioUnitario": 20
+      "descripcion": "Prueba eliminacion",
+      "cantidad": 15,
+      "precioUnitario": 35
     }
   ]
 }
 
 ### Obtener todos los albaranes
 GET http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 
 ### Ver albarán por ID
-GET http://localhost:3000/api/deliverynote/680b7280f01917d382a2a865
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+GET http://localhost:3000/api/deliverynote/680e60999f2c3070c0241430
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 
 ### Descargar PDF del albarán
-GET http://localhost:3000/api/deliverynote/pdf/680b7280f01917d382a2a865
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+GET http://localhost:3000/api/deliverynote/pdf/680e61bd9f2c3070c0241464
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 
 ### Firmar albarán subiendo imagen a IPFS
-PATCH http://localhost:3000/api/deliverynote/sign/680b7280f01917d382a2a865
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+PATCH http://localhost:3000/api/deliverynote/sign/680e60999f2c3070c0241430
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 Content-Type: multipart/form-data; boundary=BOUNDARY
 
 --BOUNDARY
@@ -248,13 +248,13 @@ Content-Type: image/png
 --BOUNDARY--
 
 ### Descargar PDF del albarán firmado (firma cargada desde IPFS)
-GET http://localhost:3000/api/deliverynote/pdf/680b7280f01917d382a2a865
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+GET http://localhost:3000/api/deliverynote/pdf/680e60999f2c3070c0241430
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 
 ### Ver un albarán específico (comprobar firma y pdfUrl)
-GET http://localhost:3000/api/deliverynote/680b7280f01917d382a2a865
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NTgwNjM0LCJleHAiOjE3NDU1ODQyMzR9.9sGccKvhsCRfbowTgDgvqURtT3R-gOalC00lBJdnya0
+GET http://localhost:3000/api/deliverynote/680e60999f2c3070c0241430
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 
 ### Eliminar albarán no firmado
-DELETE http://localhost:3000/api/deliverynote/67f6cb88f876057ffc5ad4d3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MjI2NTEyLCJleHAiOjE3NDQyMzAxMTJ9.kK8it5MT1X7UMjgkE3BOwlgQD68_bj_gWlAEgghaDLs
+DELETE http://localhost:3000/api/deliverynote/680e61bd9f2c3070c0241464
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM

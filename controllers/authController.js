@@ -3,6 +3,8 @@ const crypto = require("crypto"); // Para generar códigos aleatorios
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt"); // Para encriptar contraseñas
+const { sendEmail } = require("../utils/handleEmail"); // Para enviar correos electrónicos
+
 
 dotenv.config();
 
@@ -39,6 +41,19 @@ exports.register = async (req, res) => {
     });
 
     await newUser.save();
+
+    // Enviar email al usuario
+    try {
+      await sendEmail({
+        to: newUser.email,
+        subject: "Código de verificación",
+        text: `Hola! Tu código de verificación es: ${verificationCode}`,
+        from: `"Sistema de Albaranes" <${process.env.EMAIL}>`
+      });
+    } catch (emailError) {
+      console.error("No se pudo enviar el email de verificación:", emailError);
+    }
+    
 
     // Mostrar el código en la terminal, pero no enviarlo en la API
     console.log(`El código de verificación del usuario ${email} es: ${verificationCode}`);
@@ -298,6 +313,12 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
 
     console.log(`Token de recuperación para ${email}: ${resetToken}`);
+    await sendEmail({
+      to: user.email,
+      subject: "Recuperación de contraseña",
+      text: `Has solicitado recuperar tu contraseña. Usa este token: ${resetToken}`,
+      from: `"Sistema de Albaranes" <${process.env.EMAIL}>`
+    });    
 
     res.status(200).json({ message: "Token de recuperación generado (mostrado por consola)" });
   } catch (err) {
@@ -371,6 +392,14 @@ exports.inviteUser = async (req, res) => {
 
     await newUser.save();
 
+    await sendEmail({
+      to: newUser.email,
+      subject: "Invitación a Sistema de Albaranes",
+      text: `Te han invitado. Tu contraseña temporal es: ${tempPassword}`,
+      from: `"Sistema de Albaranes" <${process.env.EMAIL}>`
+    });
+    
+
     console.log(`Usuario invitado con email: ${email}, contraseña temporal: ${tempPassword}`);
 
     res.status(201).json({
@@ -386,6 +415,3 @@ exports.inviteUser = async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
-
-
-

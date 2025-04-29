@@ -4,6 +4,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
+const morganBody = require("morgan-body");
+const loggerStream = require("./utils/handleLogger");
 
 // Swagger dependencies
 const swaggerUi = require("swagger-ui-express");
@@ -17,6 +19,12 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
+morganBody(app, {
+  noColors: true,
+  skip: (req, res) => res.statusCode < 400,
+  stream: loggerStream
+});
+
 // Routes
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
@@ -29,6 +37,10 @@ app.use("/api/project", projectRoutes);
 
 const deliveryNoteRoutes = require("./routes/deliveryNoteRoutes");
 app.use("/api/deliverynote", deliveryNoteRoutes);
+
+// Error handling middleware
+const errorHandler = require("./middlewares/errorHandler");
+app.use(errorHandler);
 
 // Swagger documentation route
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));

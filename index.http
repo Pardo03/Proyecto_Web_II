@@ -3,7 +3,7 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "pruebascyber8@gmail.com",
+  "email": "usuario31@test.com",
   "password": "password123"
 }
 
@@ -21,7 +21,7 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "pruebascyber8@gmail.com",
+  "email": "usuario31@test.com",
   "password": "password123"
 }
 
@@ -62,7 +62,7 @@ Content-Type: image/jpeg
 
 ### Obtener mis datos
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MGU4NTQyYWFjNjQyN2Q4MDVkN2IyNyIsImVtYWlsIjoicHJ1ZWJhc2N5YmVyOEBnbWFpbC5jb20iLCJpYXQiOjE3NDU3ODIzNjIsImV4cCI6MTc0NTc4NTk2Mn0.ZpfHeN9Nz0cXDCnU5ytE6qN443tYuAE2gFY2-EjwHNs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ1OTQzNDUxLCJleHAiOjE3NDU5NDcwNTF9.ABTx8Y4BtoDfT4gHEsDWQlZA0xCNSm0IcJdXXTwq-Pc
 
 ### Desactivar cuenta (soft delete)
 DELETE http://localhost:3000/api/auth/delete
@@ -77,7 +77,7 @@ POST http://localhost:3000/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "usuario10@test.com"
+  "email": "pruebascyber8@gmail.com"
 }
 
 ### Resetear contraseña con token
@@ -85,7 +85,7 @@ POST http://localhost:3000/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "token": "98fc10093d40000115aff79fa1fb88b405bf419224a9290b696f18474bae707a",
+  "token": "6a8ecbbceb387147cefa8c90d33a846d74f0f816e943b4b20b6e7cb1d568653d",
   "newPassword": "nuevaPasswordSegura"
 }
 
@@ -135,7 +135,7 @@ Content-Type: application/json
 
 ### Obtener todos los clientes del usuario o compañía
 GET http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODY2NjU3LCJleHAiOjE3NDM4NzAyNTd9.FpwLqdPyybYNeOPJZJuGlht7lFIAtg1UQWuQz5RBPx8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ1OTQzNDUxLCJleHAiOjE3NDU5NDcwNTF9.ABTx8Y4BtoDfT4gHEsDWQlZA0xCNSm0IcJdXXTwq-Pc
 
 ### Obtener cliente por ID
 GET http://localhost:3000/api/client/67efbfbb6ac3551a93a7b4c3
@@ -180,7 +180,7 @@ Content-Type: application/json
 
 ### Obtener todos los proyectos del usuario
 GET http://localhost:3000/api/project
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTM3Nzg4LCJleHAiOjE3NDQxNDEzODh9.R0g27cL0YRC9zwnDpinBfWTbEAWxz5xuNGlwL0Hgmrw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ1OTQzNDUxLCJleHAiOjE3NDU5NDcwNTF9.ABTx8Y4BtoDfT4gHEsDWQlZA0xCNSm0IcJdXXTwq-Pc
 
 ### Obtener proyecto específico
 GET http://localhost:3000/api/project/67f10fa52ad21027da9f9dd5
@@ -207,7 +207,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiN
 
 ### Crear albarán con una entrada de horas
 POST http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ1OTQzNDUxLCJleHAiOjE3NDU5NDcwNTF9.ABTx8Y4BtoDfT4gHEsDWQlZA0xCNSm0IcJdXXTwq-Pc
 Content-Type: application/json
 
 {
@@ -225,7 +225,7 @@ Content-Type: application/json
 
 ### Obtener todos los albaranes
 GET http://localhost:3000/api/deliverynote
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ1OTQzNDUxLCJleHAiOjE3NDU5NDcwNTF9.ABTx8Y4BtoDfT4gHEsDWQlZA0xCNSm0IcJdXXTwq-Pc
 
 ### Ver albarán por ID
 GET http://localhost:3000/api/deliverynote/680e60999f2c3070c0241430
@@ -256,5 +256,6 @@ GET http://localhost:3000/api/deliverynote/680e60999f2c3070c0241430
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
 
 ### Eliminar albarán no firmado
-DELETE http://localhost:3000/api/deliverynote/680e61bd9f2c3070c0241464
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ1NzcyNjcwLCJleHAiOjE3NDU3NzYyNzB9.CY1f1eGDA7FZDN3y5RbVXMXF_3Pd4fDxlm8A6FLglAM
+DELETE http://localhost:3000/api/deliverynote/6810fbd84b2cd8c25e744801
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ1OTQzNDUxLCJleHAiOjE3NDU5NDcwNTF9.ABTx8Y4BtoDfT4gHEsDWQlZA0xCNSm0IcJdXXTwq-Pc
+

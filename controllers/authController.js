@@ -232,7 +232,8 @@ exports.uploadLogo = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-    user.logoUrl = `/uploads/${req.file.filename}`;
+    const fullUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+    user.logoUrl = fullUrl;
     await user.save();
 
     res.status(200).json({

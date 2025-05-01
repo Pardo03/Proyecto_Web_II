@@ -50,7 +50,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTUxOTQzN
 
 ### Subida de logo (imagen)
 PATCH http://localhost:3000/api/auth/logo
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTAxMmE2OTM2YzRkMGVkMzYyZTFhMyIsImVtYWlsIjoidXN1YXJpbzEzQHRlc3QuY29tIiwiaWF0IjoxNzQyNzM4MDg2LCJleHAiOjE3NDI3NDE2ODZ9.8mmRMu3QG51-wbG3y6h2fm-Y7BAVLfungvWQJpVycZI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZjMmVkM2Q4ZTM0ZGVlMGU2ZjE4NSIsImVtYWlsIjoidXN1YXJpbzMxQHRlc3QuY29tIiwiaWF0IjoxNzQ2MDkwMTk5LCJleHAiOjE3NDYwOTM3OTl9.p9IHV2mG2bZOboxUhWcF2gplYI3bCfyHh3r_d7jslDc
 Content-Type: multipart/form-data; boundary=BOUNDARY
 
 --BOUNDARY

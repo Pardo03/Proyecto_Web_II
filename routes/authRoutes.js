@@ -2,6 +2,8 @@ const express = require("express");
 const { register, validateEmail, login, updatePersonalData, updateCompanyData, uploadLogo, getMe, deleteMe, forgotPassword, resetPassword, inviteUser } = require("../controllers/authController");
 const verifyToken = require("../middlewares/authMiddleware");
 const upload = require("../middlewares/uploadMiddleware");
+const { registerValidator, loginValidator, validateCodeValidator, forgotPasswordValidator, resetPasswordValidator } = require("../validators/authValidator");
+const validateRequest = require("../middlewares/validatorMiddleware");
 
 const router = express.Router();
 
@@ -26,7 +28,7 @@ const router = express.Router();
  *          '409':
  *              description: Conflict (email already registered)
  */
-router.post("/register", register);
+router.post("/register", registerValidator, validateRequest, register);
 
 /**
  * @openapi
@@ -49,7 +51,7 @@ router.post("/register", register);
  *          '404':
  *              description: User not found
  */
-router.put("/validate", verifyToken, validateEmail);
+router.put("/validate", verifyToken, validateCodeValidator, validateRequest, validateEmail);
 
 /**
  * @openapi
@@ -70,7 +72,7 @@ router.put("/validate", verifyToken, validateEmail);
  *          '401':
  *              description: Invalid credentials
  */
-router.post("/login", login);
+router.post("/login", loginValidator, validateRequest, login);
 
 /**
  * @openapi
@@ -188,7 +190,7 @@ router.delete("/delete", verifyToken, deleteMe);
  *          '400':
  *              description: Validation error
  */
-router.post("/forgot-password", forgotPassword);
+router.post("/forgot-password", forgotPasswordValidator, validateRequest, forgotPassword);
 
 /**
  * @openapi
@@ -215,7 +217,7 @@ router.post("/forgot-password", forgotPassword);
  *          '400':
  *              description: Validation error
  */
-router.post("/reset-password", resetPassword);
+router.post("/reset-password", resetPasswordValidator, validateRequest, resetPassword);
 
 /**
  * @openapi

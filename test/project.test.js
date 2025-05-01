@@ -132,7 +132,7 @@ describe("Project API - Casos negativos", () => {
         });
   
       expect(res.statusCode).toBe(400);
-      expect(res.body.message).toBe("Faltan campos obligatorios");
+      expect(res.body.message).toBe("El nombre del proyecto es obligatorio");
     });
   
     it("No debe crear proyecto con cliente inválido", async () => {

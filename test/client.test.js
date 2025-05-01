@@ -147,18 +147,28 @@ describe("Casos negativos de clientes", () => {
     });
   
     it("No debe recuperar cliente que no está archivado", async () => {
-      // Creamos uno temporal
+      // Creamos uno temporal 
       const temp = await request
         .post("/api/client")
         .set("Authorization", `Bearer ${token}`)
-        .send({ nombre: "Cliente Temporal" });
-  
+        .send({
+          nombre: "Cliente Temporal",
+          email: "temporal@email.com",
+          telefono: "111111111"
+        });
+        
+    
+      expect(temp.status).toBe(201);
+      const clientId = temp.body.client?._id;
+      expect(clientId).toBeDefined();
+    
       const res = await request
-        .patch(`/api/client/recover/${temp.body.client._id}`)
+        .patch(`/api/client/recover/${clientId}`)
         .set("Authorization", `Bearer ${token}`);
-  
-      expect(res.status).toBe(404); // porque no está archivado
+    
+      expect(res.status).toBe(404);
     });
+    
   
     it("No debe eliminar cliente de otro usuario", async () => {
       // Crear otro usuario
@@ -166,28 +176,38 @@ describe("Casos negativos de clientes", () => {
         email: "otro@user.com",
         password: "Password123!",
       });
-  
+    
       const login = await request.post("/api/auth/login").send({
         email: "otro@user.com",
         password: "Password123!",
       });
-  
+    
       const otroToken = login.body.token;
-  
+    
       // Crear cliente con este nuevo usuario
       const clienteOtro = await request
         .post("/api/client")
         .set("Authorization", `Bearer ${otroToken}`)
-        .send({ nombre: "Cliente Ajeno" });
-  
+        .send({
+          nombre: "Cliente Ajeno",
+          email: "ajeno@email.com",
+          telefono: "222222222"
+        });
+        
+    
+      expect(clienteOtro.status).toBe(201);
+      const clientId = clienteOtro.body.client?._id;
+      expect(clientId).toBeDefined();
+    
       // Intentar eliminarlo con el token anterior
       const res = await request
-        .delete(`/api/client/${clienteOtro.body.client._id}?soft=false`)
+        .delete(`/api/client/${clientId}?soft=false`)
         .set("Authorization", `Bearer ${token}`);
-  
+    
       expect(res.status).toBe(403);
       expect(res.body.message).toMatch(/no tienes permisos/i);
     });
+    
   
     it("No debe acceder sin token", async () => {
       const res = await request.get("/api/client");

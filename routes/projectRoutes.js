@@ -11,6 +11,12 @@ const {
   deleteProject,
 } = require("../controllers/projectController");
 const verifyToken = require("../middlewares/authMiddleware");
+const {
+  createProjectValidator,
+  updateProjectValidator,
+  validateProjectId
+} = require("../validators/projectValidator");
+const handleValidation = require("../middlewares/validatorMiddleware");
 
 /**
  * @swagger
@@ -50,7 +56,7 @@ const verifyToken = require("../middlewares/authMiddleware");
  *       409:
  *         description: Ya existe un proyecto con ese nombre
  */
-router.post("/", verifyToken, createProject);
+router.post("/", verifyToken, createProjectValidator, handleValidation, createProject);
 
 /**
  * @swagger
@@ -87,7 +93,7 @@ router.get("/archived", verifyToken, getArchivedProjects);
  *       404:
  *         description: Proyecto no encontrado o ya archivado
  */
-router.patch("/archive/:id", verifyToken, archiveProject);
+router.patch("/archive/:id", verifyToken, validateProjectId, handleValidation, archiveProject);
 
 /**
  * @swagger
@@ -110,7 +116,7 @@ router.patch("/archive/:id", verifyToken, archiveProject);
  *       404:
  *         description: Proyecto no encontrado o no archivado
  */
-router.patch("/recover/:id", verifyToken, recoverProject);
+router.patch("/recover/:id", verifyToken, validateProjectId, handleValidation, recoverProject);
 
 /**
  * @swagger
@@ -147,7 +153,7 @@ router.patch("/recover/:id", verifyToken, recoverProject);
  *       409:
  *         description: Nombre duplicado para este cliente
  */
-router.put("/:id", verifyToken, updateProject);
+router.put("/:id", verifyToken, validateProjectId, updateProjectValidator, handleValidation, updateProject);
 
 /**
  * @swagger
@@ -184,7 +190,7 @@ router.get("/", verifyToken, getAllProjects);
  *       404:
  *         description: Proyecto no encontrado o sin permisos
  */
-router.get("/:id", verifyToken, getProjectById);
+router.get("/:id", verifyToken, validateProjectId, handleValidation, getProjectById);
 
 /**
  * @swagger
@@ -212,6 +218,6 @@ router.get("/:id", verifyToken, getProjectById);
  *       404:
  *         description: Proyecto no encontrado
  */
-router.delete("/:id", verifyToken, deleteProject);
+router.delete("/:id", verifyToken, validateProjectId, handleValidation, deleteProject);
 
 module.exports = router;

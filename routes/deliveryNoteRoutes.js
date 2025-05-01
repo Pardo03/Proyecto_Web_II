@@ -10,16 +10,18 @@ const {
   signDeliveryNote,
   deleteDeliveryNote,
 } = require("../controllers/deliveryNoteController");
+const { createDeliveryNoteValidator, signDeliveryNoteValidator } = require("../validators/deliveryNoteValidator");
+const validate = require("../middlewares/validatorMiddleware");
 
 /**
- * @swagger
+ * @openapi
  * tags:
  *   name: DeliveryNotes
  *   description: Gestión de albaranes
  */
 
 /**
- * @swagger
+ * @openapi
  * /api/deliverynote:
  *   post:
  *     summary: Crear un nuevo albarán
@@ -47,7 +49,7 @@ const {
  *                   properties:
  *                     tipo:
  *                       type: string
- *                       enum: [hora, material]
+ *                       enum: [material, mano_obra]
  *                     descripcion:
  *                       type: string
  *                     cantidad:
@@ -60,10 +62,10 @@ const {
  *       400:
  *         description: Datos incompletos
  */
-router.post("/", verifyToken, createDeliveryNote);
+router.post("/", verifyToken, createDeliveryNoteValidator, validate, createDeliveryNote);
 
 /**
- * @swagger
+ * @openapi
  * /api/deliverynote:
  *   get:
  *     summary: Listar todos los albaranes
@@ -77,7 +79,7 @@ router.post("/", verifyToken, createDeliveryNote);
 router.get("/", verifyToken, getAllDeliveryNotes);
 
 /**
- * @swagger
+ * @openapi
  * /api/deliverynote/{id}:
  *   get:
  *     summary: Obtener un albarán por ID
@@ -100,7 +102,7 @@ router.get("/", verifyToken, getAllDeliveryNotes);
 router.get("/:id", verifyToken, getDeliveryNoteById);
 
 /**
- * @swagger
+ * @openapi
  * /api/deliverynote/pdf/{id}:
  *   get:
  *     summary: Descargar PDF de un albarán
@@ -123,7 +125,7 @@ router.get("/:id", verifyToken, getDeliveryNoteById);
 router.get("/pdf/:id", verifyToken, generatePDFDeliveryNote);
 
 /**
- * @swagger
+ * @openapi
  * /api/deliverynote/sign/{id}:
  *   patch:
  *     summary: Firmar un albarán subiendo la imagen de la firma
@@ -155,10 +157,24 @@ router.get("/pdf/:id", verifyToken, generatePDFDeliveryNote);
  *       400:
  *         description: Error al subir la firma
  */
-router.patch("/sign/:id", verifyToken, uploadFirma.single("firma"), signDeliveryNote);
+router.patch(
+  "/sign/:id",
+  verifyToken,
+  uploadFirma.single("firma"), // este crea req.file
+  (req, res, next) => {
+    if (!req.file) {
+      return res.status(400).json({ message: "Imagen de firma requerida" });
+    }
+    next();
+  },
+  signDeliveryNoteValidator, // este valida el :id
+  validate,
+  signDeliveryNote
+);
+
 
 /**
- * @swagger
+ * @openapi
  * /api/deliverynote/{id}:
  *   delete:
  *     summary: Eliminar un albarán (solo si no está firmado)

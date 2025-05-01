@@ -11,6 +11,12 @@ const {
   recoverClient
 } = require("../controllers/clientController");
 const verifyToken = require("../middlewares/authMiddleware");
+const validate = require("../middlewares/validatorMiddleware");
+const {
+  createClientValidator,
+  updateClientValidator,
+  validateClientId
+} = require("../validators/clientValidator");
 
 /**
  * @swagger
@@ -58,7 +64,7 @@ const verifyToken = require("../middlewares/authMiddleware");
  *       409:
  *         description: Cliente duplicado
  */
-router.post("/", verifyToken, createClient);
+router.post("/", verifyToken, createClientValidator, validate, createClient);
 
 /**
  * @swagger
@@ -109,7 +115,7 @@ router.get("/archived", verifyToken, getArchivedClients);
  *       404:
  *         description: Cliente no encontrado
  */
-router.get("/:id", verifyToken, getClientById);
+router.get("/:id", verifyToken, validateClientId, validate, getClientById);
 
 /**
  * @swagger
@@ -142,7 +148,7 @@ router.get("/:id", verifyToken, getClientById);
  *       200:
  *         description: Cliente actualizado
  */
-router.put("/:id", verifyToken, updateClient);
+router.put("/:id", verifyToken, validateClientId, updateClientValidator, validate, updateClient);
 
 /**
  * @swagger
@@ -162,7 +168,7 @@ router.put("/:id", verifyToken, updateClient);
  *       200:
  *         description: Cliente archivado correctamente
  */
-router.patch("/archive/:id", verifyToken, archiveClient);
+router.patch("/archive/:id", verifyToken, validateClientId, validate, archiveClient);
 
 /**
  * @swagger
@@ -182,7 +188,7 @@ router.patch("/archive/:id", verifyToken, archiveClient);
  *       200:
  *         description: Cliente recuperado
  */
-router.patch("/recover/:id", verifyToken, recoverClient);
+router.patch("/recover/:id", verifyToken, validateClientId, validate, recoverClient);
 
 /**
  * @swagger
@@ -207,6 +213,6 @@ router.patch("/recover/:id", verifyToken, recoverClient);
  *       200:
  *         description: Cliente eliminado
  */
-router.delete("/:id", verifyToken, deleteClient);
+router.delete("/:id", verifyToken, validateClientId, validate, deleteClient);
 
 module.exports = router;

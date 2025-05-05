@@ -4,7 +4,7 @@ const supertest = require('supertest');
 const app = require("../index");
 const mongoose = require("mongoose");
 const request = require("supertest")(app);
-const User = require('../models/User'); // Asegúrate que la ruta sea correcta
+const User = require('../models/User');
 const path = require('path');
 const fs = require('fs');
 

@@ -1,8 +1,8 @@
 const sendErrorToSlack = require("../utils/sendErrorToSlack");
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = async (err, req, res, next) => {
   console.error(err); // Siempre log local
-  
+
   let statusCode = 500;
   let message = "Error interno del servidor";
 
@@ -24,7 +24,11 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // Errores de multer
-  if (err.message && (err.message.includes("Solo se permiten imágenes") || err.message.includes("Formato no válido"))) {
+  if (
+    err.message &&
+    (err.message.includes("Solo se permiten imágenes") ||
+      err.message.includes("Formato no válido"))
+  ) {
     statusCode = 400;
     message = err.message;
   }
@@ -35,18 +39,23 @@ const errorHandler = (err, req, res, next) => {
     message = err.message;
   }
 
-  res.status(statusCode).json({ message });
-
-  //Si es 500, se reporta a Slack
+  // Si es error 500, se envía a Slack antes de responder
   if (statusCode === 500) {
-    sendErrorToSlack({
-      error: err,
-      path: req.originalUrl,
-      method: req.method,
-      body: req.body,
-      user: req.user || null,
-    });
+    try {
+      await sendErrorToSlack({
+        error: err,
+        path: req.originalUrl,
+        method: req.method,
+        body: req.body,
+        user: req.user || null,
+      });
+    } catch (slackErr) {
+      console.error("Error al enviar a Slack:", slackErr.message);
+    }
   }
+
+  return res.status(statusCode).json({ message });
 };
 
 module.exports = errorHandler;
+

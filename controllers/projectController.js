@@ -264,3 +264,255 @@ exports.deleteProject = async (req, res) => {
   }
 };
 
+
+/*
+const Project = require("../models/Project");
+const Client = require("../models/Client");
+
+exports.createProject = async (req, res) => {
+  try {
+    const { nombre, descripcion, clienteId } = req.body;
+    const user = req.user;
+
+    if (!nombre || !clienteId) {
+      return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
+
+    const client = await Client.findOne({
+      _id: clienteId,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    });
+
+    if (!client) {
+      return res.status(404).json({ message: "Cliente no válido o no accesible" });
+    }
+
+    const existing = await Project.findOneWithDeleted({
+      nombre,
+      clienteId,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    });
+
+    if (existing) {
+      return res.status(409).json({ message: "Ya existe un proyecto con ese nombre para este cliente" });
+    }
+
+    const newProject = new Project({
+      nombre,
+      descripcion,
+      clienteId,
+      createdBy: user.id,
+      companyId: user.companyId || null,
+    });
+
+    await newProject.save();
+
+    res.status(201).json({
+      message: "Proyecto creado correctamente",
+      project: newProject,
+    });
+  } catch (error) {
+    console.error("Error creando proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.updateProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre, descripcion } = req.body;
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o sin permisos" });
+    }
+
+    if (nombre && nombre !== project.nombre) {
+      const existing = await Project.findOneWithDeleted({
+        nombre,
+        clienteId: project.clienteId,
+        _id: { $ne: id },
+        $or: [
+          { createdBy: user.id },
+          { companyId: user.companyId },
+        ],
+      });
+
+      if (existing) {
+        return res.status(409).json({ message: "Ya existe un proyecto con ese nombre para este cliente" });
+      }
+    }
+
+    if (nombre) project.nombre = nombre;
+    if (descripcion) project.descripcion = descripcion;
+
+    await project.save();
+
+    res.status(200).json({
+      message: "Proyecto actualizado correctamente",
+      project,
+    });
+  } catch (error) {
+    console.error("Error al actualizar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.getAllProjects = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const projects = await Project.find({
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    }).populate("clienteId", "nombre email").sort({ createdAt: -1 });
+
+    res.status(200).json({ projects });
+  } catch (error) {
+    console.error("Error al obtener proyectos:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.getProjectById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId },
+      ],
+    }).populate("clienteId", "nombre email direccion");
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o sin permisos" });
+    }
+
+    res.status(200).json({ project });
+  } catch (error) {
+    console.error("Error al obtener proyecto por ID:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.archiveProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o ya archivado" });
+    }
+
+    await project.delete(); // soft delete
+
+    res.status(200).json({ message: "Proyecto archivado correctamente" });
+  } catch (error) {
+    console.error("Error al archivar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.recoverProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+
+    const project = await Project.findOneDeleted({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o no está archivado" });
+    }
+
+    await project.restore();
+
+    res.status(200).json({ message: "Proyecto recuperado correctamente" });
+  } catch (error) {
+    console.error("Error al recuperar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.getArchivedProjects = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const archived = await Project.findDeleted({
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    }).populate("clienteId", "nombre");
+
+    res.status(200).json({ archived });
+  } catch (error) {
+    console.error("Error al listar archivados:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const soft = req.query.soft !== "false";
+    const user = req.user;
+
+    const project = await Project.findOneWithDeleted({
+      _id: id,
+      $or: [
+        { createdBy: user.id },
+        { companyId: user.companyId }
+      ]
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Proyecto no encontrado o sin permisos" });
+    }
+
+    if (soft) {
+      await project.delete();
+      return res.status(200).json({ message: "Proyecto archivado (soft delete)" });
+    } else {
+      await project.remove(); // hard delete
+      return res.status(200).json({ message: "Proyecto eliminado permanentemente (hard delete)" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar proyecto:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+*/

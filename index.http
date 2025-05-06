@@ -10,10 +10,10 @@ Content-Type: application/json
 ### Validar email con token
 PUT http://localhost:3000/api/auth/validate
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NDI2OTUsImV4cCI6MTc0NjQ0NjI5NX0.j-UoblaGP-ghiEKrQvJG1lACQRQTNA-4svoWQeC7O0I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWE2MDQ2M2E5MWQxOTlmMWUyZDIxYyIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY1NTkwNDgsImV4cCI6MTc0NjU2MjY0OH0.Yaew19tb_SHe75hGq9LbITaWXC1PLxoLRa2or88A6uo
 
 {
-  "code": "247094"
+  "code": "859078"
 }
 
 ### Login de usuario
@@ -70,8 +70,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2M
 
 ### Eliminar cuenta (hard delete)
 DELETE http://localhost:3000/api/auth/delete?soft=false
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NjMwNjEsImV4cCI6MTc0NjQ2NjY2MX0.EaPHMHhskb5AOCGq9Vb_ZvUmH8mpHMZYDOHuP545ioE
-### Recuperar contraseña - solicitar token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWE2MDQ2M2E5MWQxOTlmMWUyZDIxYyIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY1NTkwNDgsImV4cCI6MTc0NjU2MjY0OH0.Yaew19tb_SHe75hGq9LbITaWXC1PLxoLRa2or88A6uo
+
 POST http://localhost:3000/api/auth/forgot-password
 Content-Type: application/json
 
@@ -108,7 +108,7 @@ Content-Type: application/json
 
 ### Crear cliente
 POST http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NDMxNjAsImV4cCI6MTc0NjQ0Njc2MH0.JyGx_tz-KRDhkO1VXT9ppO1B0VwEef1O9oV9CB10XF8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTkwMzI2MGE5Mzg4NDlkNjM2MzhmYSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0Njk2NzIsImV4cCI6MTc0NjQ3MzI3Mn0.iZh5qnHsCpdl-954Im6GzuHa0fTBXgZJNa0fpI9Iz70
 Content-Type: application/json
 
 {
@@ -134,7 +134,7 @@ Content-Type: application/json
 
 ### Obtener todos los clientes del usuario o compañía
 GET http://localhost:3000/api/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NjMwNjEsImV4cCI6MTc0NjQ2NjY2MX0.EaPHMHhskb5AOCGq9Vb_ZvUmH8mpHMZYDOHuP545ioE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTkwMzI2MGE5Mzg4NDlkNjM2MzhmYSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0Njk2NzIsImV4cCI6MTc0NjQ3MzI3Mn0.iZh5qnHsCpdl-954Im6GzuHa0fTBXgZJNa0fpI9Iz70
 
 ### Obtener cliente por ID
 GET http://localhost:3000/api/client/68189bb728c1b2e8121b7606
@@ -153,17 +153,17 @@ GET http://localhost:3000/api/client/archived
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzNzg2NzA1LCJleHAiOjE3NDM3OTAzMDV9.if4PDkkSUL1v8kY1KRDR6HbRvh4Zaf9J_DxxyGL3Ids
 
 ### Eliminar cliente (hard)
-DELETE http://localhost:3000/api/client/68189bb728c1b2e8121b7606?soft=false
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NjMwNjEsImV4cCI6MTc0NjQ2NjY2MX0.EaPHMHhskb5AOCGq9Vb_ZvUmH8mpHMZYDOHuP545ioE
+DELETE http://localhost:3000/api/client/681904250a938849d6363900?soft=false
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTkwMzI2MGE5Mzg4NDlkNjM2MzhmYSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0Njk2NzIsImV4cCI6MTc0NjQ3MzI3Mn0.iZh5qnHsCpdl-954Im6GzuHa0fTBXgZJNa0fpI9Iz70
 ### Crear un proyecto asociado a un cliente
 POST http://localhost:3000/api/project
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NDMyNTIsImV4cCI6MTc0NjQ0Njg1Mn0.N60489ztdpqrcB-y7eb3UCc0V3XF6vXw0wVf13nj5wI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTkwMzI2MGE5Mzg4NDlkNjM2MzhmYSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0Njk2NzIsImV4cCI6MTc0NjQ3MzI3Mn0.iZh5qnHsCpdl-954Im6GzuHa0fTBXgZJNa0fpI9Iz70
 Content-Type: application/json
 
 {
-  "nombre": "Proyecto Especial",
+  "nombre": "Proyecto Especial Plus",
   "descripcion": "Albaranes y firma digital",
-  "clienteId": "68189bb728c1b2e8121b7606"
+  "clienteId": "681904250a938849d6363900"
 }
 
 ### Editar proyecto existente
@@ -178,7 +178,7 @@ Content-Type: application/json
 
 ### Obtener todos los proyectos del usuario
 GET http://localhost:3000/api/project
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTg5OWM2MjhjMWIyZTgxMjFiNzVlMSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0NDMyNTIsImV4cCI6MTc0NjQ0Njg1Mn0.N60489ztdpqrcB-y7eb3UCc0V3XF6vXw0wVf13nj5wI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTkwMzI2MGE5Mzg4NDlkNjM2MzhmYSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0Njk2NzIsImV4cCI6MTc0NjQ3MzI3Mn0.iZh5qnHsCpdl-954Im6GzuHa0fTBXgZJNa0fpI9Iz70
 
 ### Obtener proyecto específico
 GET http://localhost:3000/api/project/67f572db8e371670ab3da527
@@ -197,8 +197,8 @@ GET http://localhost:3000/api/project/archived
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQ0MTM3Nzg4LCJleHAiOjE3NDQxNDEzODh9.R0g27cL0YRC9zwnDpinBfWTbEAWxz5xuNGlwL0Hgmrw
 
 ### Eliminar proyecto permanentemente (hard delete)
-DELETE http://localhost:3000/api/project/67f11270b4f324009f156fc4?soft=false
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZWZiZTBiNmFjMzU1MWE5M2E3YjRhZSIsImVtYWlsIjoidXN1YXJpbzMwQHRlc3QuY29tIiwiaWF0IjoxNzQzODYxOTc2LCJleHAiOjE3NDM4NjU1NzZ9.OkkqtRdcbtLzpctwHGoTqjfvrMef42TAYnz91AXb8ws
+DELETE http://localhost:3000/api/project/681904340a938849d6363904?soft=false
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTkwMzI2MGE5Mzg4NDlkNjM2MzhmYSIsImVtYWlsIjoicm9kcmlrMTR5dEBnbWFpbC5jb20iLCJpYXQiOjE3NDY0Njk2NzIsImV4cCI6MTc0NjQ3MzI3Mn0.iZh5qnHsCpdl-954Im6GzuHa0fTBXgZJNa0fpI9Iz70
 
 
 ## ALBARÁN

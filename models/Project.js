@@ -35,3 +35,43 @@ const projectSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Project", projectSchema);
+
+
+/*
+const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
+
+const projectSchema = new mongoose.Schema(
+  {
+    nombre: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    descripcion: {
+      type: String,
+      trim: true,
+    },
+    clienteId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    companyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    }
+  },
+  { timestamps: true }
+);
+
+projectSchema.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
+
+module.exports = mongoose.model("Project", projectSchema);
+*/
